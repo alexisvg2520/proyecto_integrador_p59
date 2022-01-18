@@ -1,0 +1,16 @@
+{
+    "name": "proyecto_integrador",
+    "version": "1.0.0",
+    "description": "Proyecto Integrador P59 Grupo 3: Coral, Contreras, Ñacato y Vallejo",
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server.js"
+    },
+    "author": "Grupo 3",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.17.2",
+        "hbs": "^4.2.0"
+    }
+}
