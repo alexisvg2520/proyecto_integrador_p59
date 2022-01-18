@@ -17,6 +17,12 @@ app.get('/', (req, res) => {
     });
 });
 
+app.get('/login', (req, res) => {
+    res.render('login', {
+        titulo: "Login"
+    });
+});
+
 app.get('/acerca', (req, res) => {
     res.render('acerca', {
         titulo: "Acerca"
