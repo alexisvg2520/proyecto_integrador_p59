@@ -2,6 +2,70 @@
 <html lang="es">
   {{> header }}
   <body>
+
+    <script type="text/javascript" src="assets/js/jquery-3.6.0.min.js">/*Jquery script */</script>  
+
+<script src="assets/js/highcharts.js"></script>
+
+
+<script src="assets/js/dom-to-image.js"> /*dom to image script */</script>
+
+<script type="text/javascript" src="assets/js/pdfmake.min.js">/*PDF MAKE SCRIPT */</script>
+
+<script type="text/javascript" src="assets/js/html2canvas.min.js">/*PDF,ETC MAKE SCRIPT */</script>
+
+<script src="assets/js/popper.min.js">/*POPPER LIBRERIA */</script>
+
+<script src="assets/js/jquery-ui.js"></script>
+
+<script src="assets/js/jquery.highchartTable.js"></script>
+
+
+
+
+    <script>
+        /* Cargar la tabla al incio llamada a metodo get nodejs */
+        window.onload = codeAddress;
+
+        function codeAddress() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    const myObj = [JSON.parse(this.responseText)];  // se transforma el JSON
+                    buildTable(myObj);
+
+                }
+            };
+            xhttp.open("GET", "http://localhost:3000/list", true);
+            xhttp.send();
+        }
+
+        function buildTable(data) {
+            var table = document.getElementById('tabledata')   // se construye la tabla apartir del JSON
+            console.log(data);
+            for (var i = 0; i < data.length; i++) {
+                var row = `<tr>
+							<td>${data[i].cur_codigo}</td>
+							<td>${data[i].id_materia}</td>
+							<td>${data[i].aprobada}</td>
+                            <td>${data[i].mtr_numero}</td>
+                            <td>${data[i].cedula}</td>
+                            <td>${data[i].formato}</td>
+					  </tr>`
+                table.innerHTML += row
+
+
+            }
+        }
+
+
+        /*se llama ala funcion al cargar la pagina*/
+        /*FIN SCRIPT TABLA AL INICIO*/
+    </script>
+
+    
+
+
     <div class="container-scroller">
       <!-- partial:partials/_sidebar.html -->
       {{> navbar }}
@@ -112,11 +176,11 @@
                   </div>
                   <div class="card-footer clearfix d-flex justify-content-center">
                     <div class="btn-group" role="group" aria-label="Basic example">
-                      <button type="button" class="btn btn-danger" id="btnPDF">
+                      <button type="button" class="btn btn-danger" id="btnPDF" onclick="downloadDoc()">
                         <i class="mdi mdi-file-pdf btn-icon-prepend"></i>PDF</button>
-                      <button type="button" class="btn btn-info" id="btnPNG">
+                      <button type="button" class="btn btn-info" id="btnPNG" onclick="downloadtable()">
                         <i class="mdi mdi-file-image btn-icon-prepend"></i>PNG</button>
-                      <button type="button" class="btn btn-success" id="btnExcel">
+                      <button type="button" class="btn btn-success" id="btnExcel" onclick="exportData()">
                         <i class="mdi mdi-file-excel btn-icon-prepend"></i>Excel</button>
                     </div>
                   </div>  
@@ -128,8 +192,33 @@
                     <div class="d-flex flex-row justify-content-between">
                       <h4 class="card-title mb-1">Tabla 1</h4>
                       <p class="text-muted mb-1">Contenido de tabla</p>
+                          
+                    </div>      
+                      <!-- TABLA DATOS -->
+                      
+                      <div id="tabledatos">
 
-                    </div>                    
+                         <table>
+                    
+                   <tr class="bg-info">
+                     <th>Curso Codigo</th>
+                     <th>ID de materia</th>
+                     <th>Aprobado</th>
+                      <th>Numero de matricula</th>
+                    <th>Cedula</th>
+                      <th>Formato</th>
+                       </tr>
+
+                  <tbody id="tabledata">
+
+                  </tbody>
+                 </table> 
+
+
+                      </div>
+                  
+                  <
+                   <!-- TABLA DATOS -->          
                   </div>
                 </div>
               </div>
@@ -246,9 +335,9 @@
                   </div>  
                   <div class="card-footer clearfix d-flex justify-content-center">
                     <div class="btn-group" role="group" aria-label="Basic example">
-                      <button type="button" class="btn btn-danger" id="btnPDF">
+                      <button type="button" class="btn btn-danger" id="btnPDF" >
                         <i class="mdi mdi-file-pdf btn-icon-prepend"></i>PDF</button>
-                      <button type="button" class="btn btn-info" id="btnPNG">
+                      <button type="button" class="btn btn-info" id="btnPNG" >
                         <i class="mdi mdi-file-image btn-icon-prepend"></i>PNG</button>
                       <button type="button" class="btn btn-success" id="btnExcel">
                         <i class="mdi mdi-file-excel btn-icon-prepend"></i>Excel</button>
@@ -269,6 +358,137 @@
       </div>
       <!-- page-body-wrapper ends -->
     </div>
+
+   
+ <script>
+ /*SCRIPT PARA COONVERTIR TABLA A PNG*/
+  function downloadtable() {
+
+      var node = document.getElementById('tabledatos');  /*LLAMADA ALA TABLA POR ID */
+
+      domtoimage.toPng(node)
+          .then(function (dataUrl) {
+              var img = new Image();
+              img.src = dataUrl;
+              downloadURI(dataUrl, "tabla.png")
+          })
+          .catch(function (error) {
+              console.error('Error', error);
+          });
+
+  }
+
+
+
+  function downloadURI(uri, name) {
+      var link = document.createElement("a");
+      link.download = name;
+      link.href = uri;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      delete link;
+  }
+
+
+ /*FIN SCRIPT PARA COONVERTIR TABLA A PNG*/
+</script>
+
+<script>
+  /*SCRIPT PARA COONVERTIR TABLA A PDF*/
+	function downloadDoc(){
+
+html2canvas($("#tabledatos")[0],{   /*LLAMADA ALA TABLA POR ID */
+	onrendered:function(canvas){
+		var data=canvas.toDataURL();
+		var docDefinition={
+			content:[{
+				image:data,
+				width:500
+			}]
+		};
+		pdfMake.createPdf(docDefinition).download("Tabla.pdf");
+	}
+})
+	}
+/*FIN SCRIPT PARA COONVERTIR TABLA A PDF*/
+</script>
+
+
+<script>
+
+    /*SCRIPT PARA COONVERTIR TABLA A EXCEL*/
+
+    function exportData() {
+ 
+ // Variable to store the final csv data
+ var csv_data = [];
+
+ // Get each row data
+ var datos = document.getElementById('tabledatos');
+ var rows = datos.getElementsByTagName('tr');
+ for (var i = 0; i < rows.length; i++) {
+
+     // Get each column data
+     var cols = rows[i].querySelectorAll('td,th');
+
+     // Stores each csv row data
+     var csvrow = [];
+     for (var j = 0; j < cols.length; j++) {
+
+         // Get the text data of each cell of
+         // a row and push it to csvrow
+         csvrow.push(cols[j].innerHTML);
+     }
+
+     // Combine each column value with comma
+     csv_data.push(csvrow.join(","));
+ }
+ // combine each row data with new line character
+ csv_data = csv_data.join('\n');
+
+ downloadCSVFile(csv_data);
+
+ /* We will use this function later to download
+ the data in a csv file downloadCSVFile(csv_data);
+ */
+}
+
+function downloadCSVFile(csv_data) {
+ 
+ // Create CSV file object and feed
+ // our csv_data into it
+ CSVFile = new Blob([csv_data], {
+     type: "text/csv"
+ });
+
+ // Create to temporary link to initiate
+ // download process
+ var temp_link = document.createElement('a');
+
+ // Download csv file
+ temp_link.download = "Tabla.csv";
+ var url = window.URL.createObjectURL(CSVFile);
+ temp_link.href = url;
+
+ // This link should not be displayed
+ temp_link.style.display = "none";
+ document.body.appendChild(temp_link);
+
+ // Automatically click the link to
+ // trigger download
+ temp_link.click();
+ document.body.removeChild(temp_link);
+}
+
+
+
+/*FIN SCRIPT PARA COONVERTIR TABLA A EXCEL*/
+</script>
+
+
+
+
     <!-- container-scroller -->
     <!-- plugins:js -->
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
@@ -290,5 +510,9 @@
     <!-- Custom js for this page -->
     <script src="assets/js/dashboard.js"></script>
     <!-- End custom js for this page -->
+
+    
+
+
   </body>
 </html>
