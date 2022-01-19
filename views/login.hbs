@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Corona Admin</title>
+    <title>Grupo 3 | {{ titulo }}</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="../../assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../../assets/vendors/css/vendor.bundle.base.css">
@@ -26,18 +26,18 @@
             <div class="card col-lg-4 mx-auto">
               <div class="card-body px-5 py-5">
                 <h3 class="card-title text-left mb-3">Login</h3>
-                <form>
-                    <div class="form-group">
-                        <label>Nombre de Usuario *</label>
-                        <input type="text" class="form-control p_input">
-                    </div>
-                    <div class="form-group">
-                        <label>Contraseña *</label>
-                        <input type="text" class="form-control p_input">
-                    </div>
-                    <div class="text-center">
-                        <a href="/"><button type="submit" class="btn btn-primary btn-block enter-btn">Login</button> </a>
-                    </div>
+                <form action="/dashboard">
+                  <div class="form-group">
+                      <label>Nombre de Usuario *</label>
+                      <input type="text" class="form-control p_input">
+                  </div>
+                  <div class="form-group">
+                      <label>Contraseña *</label>
+                      <input type="text" class="form-control p_input">
+                  </div>
+                  <div class="text-center">
+                      <button type="submit" class="btn btn-primary btn-block enter-btn">Login</button>
+                  </div>
                 </form>
               </div>
             </div>

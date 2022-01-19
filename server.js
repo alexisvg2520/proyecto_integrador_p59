@@ -11,13 +11,15 @@ app.use(express.static(__dirname + '/public'));
 hbs.registerPartials(__dirname + '/views/parciales');
 app.set('view engine', 'hbs'); //rendiriza la vista 
 
-app.get('/', (req, res) => {
-    res.render('home', {
-        titulo: "Home"
+app.get('/dashboard', (req, res) => {
+    res.render('dashboard', {
+        titulo: "Dashboard",
+        pgtitulo: "REPORTES",
+        tipo: "Home"
     });
 });
 
-app.get('/login', (req, res) => {
+app.get('/', (req, res) => {
     res.render('login', {
         titulo: "Login"
     });
@@ -25,9 +27,20 @@ app.get('/login', (req, res) => {
 
 app.get('/acerca', (req, res) => {
     res.render('acerca', {
-        titulo: "Acerca"
+        titulo: "Acerca",
+        pgtitulo: "AUTORES",
+        tipo: "Autores"
     });
 });
+
+app.get('/mantenimiento', (req, res) => {
+    res.render('mantenimiento', {
+        titulo: "Mantenimiento",
+        pgtitulo: "MANTENIMIENTO",
+        tipo: "Administrador"
+    });
+});
+
 
 app.listen(port, () => {
     console.log(`Escuchando peticiones en el puerto ${port}`);
