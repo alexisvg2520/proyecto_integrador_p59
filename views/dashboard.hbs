@@ -5,23 +5,19 @@
 
     <script type="text/javascript" src="assets/js/jquery-3.6.0.min.js">/*Jquery script */</script>  
 
-<script src="assets/js/highcharts.js"></script>
+    <script src="assets/js/highcharts.js"></script>
 
+    <script src="assets/js/dom-to-image.js"> /*dom to image script */</script>
 
-<script src="assets/js/dom-to-image.js"> /*dom to image script */</script>
+    <script type="text/javascript" src="assets/js/pdfmake.min.js">/*PDF MAKE SCRIPT */</script>
 
-<script type="text/javascript" src="assets/js/pdfmake.min.js">/*PDF MAKE SCRIPT */</script>
+    <script type="text/javascript" src="assets/js/html2canvas.min.js">/*PDF,ETC MAKE SCRIPT */</script>
 
-<script type="text/javascript" src="assets/js/html2canvas.min.js">/*PDF,ETC MAKE SCRIPT */</script>
+    <script src="assets/js/popper.min.js">/*POPPER LIBRERIA */</script>
 
-<script src="assets/js/popper.min.js">/*POPPER LIBRERIA */</script>
+    <script src="assets/js/jquery-ui.js"></script>
 
-<script src="assets/js/jquery-ui.js"></script>
-
-<script src="assets/js/jquery.highchartTable.js"></script>
-
-
-
+    <script src="assets/js/jquery.highchartTable.js"></script>
 
     <script>
         /* Cargar la tabla al incio llamada a metodo get nodejs */
@@ -45,14 +41,14 @@
             console.log(data);
             for (var i = 0; i < data.length; i++) {
                 var row = `<tr>
-							<td>${data[i].cur_codigo}</td>
-							<td>${data[i].id_materia}</td>
-							<td>${data[i].aprobada}</td>
-                            <td>${data[i].mtr_numero}</td>
-                            <td>${data[i].cedula}</td>
-                            <td>${data[i].formato}</td>
-					  </tr>`
-                table.innerHTML += row
+                <td>${data[i].cur_codigo}</td>
+                <td>${data[i].id_materia}</td>
+                <td>${data[i].aprobada}</td>
+                              <td>${data[i].mtr_numero}</td>
+                              <td>${data[i].cedula}</td>
+                              <td>${data[i].formato}</td>
+                </tr>`
+                  table.innerHTML += row
 
 
             }
@@ -83,64 +79,11 @@
                   <div class="card-body">
                     <h4 class="card-title">Figura 1</h4>
                     <div class="row">
-                      <div class="col-md-5">
-                        <div class="table-responsive">
-                          <table class="table">
-                            <tbody>
-                              <tr>
-                                <td>
-                                  <i class="flag-icon flag-icon-us"></i>
-                                </td>
-                                <td>USA</td>
-                                <td class="text-right"> 1500 </td>
-                                <td class="text-right font-weight-medium"> 56.35% </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <i class="flag-icon flag-icon-de"></i>
-                                </td>
-                                <td>Germany</td>
-                                <td class="text-right"> 800 </td>
-                                <td class="text-right font-weight-medium"> 33.25% </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <i class="flag-icon flag-icon-au"></i>
-                                </td>
-                                <td>Australia</td>
-                                <td class="text-right"> 760 </td>
-                                <td class="text-right font-weight-medium"> 15.45% </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <i class="flag-icon flag-icon-gb"></i>
-                                </td>
-                                <td>United Kingdom</td>
-                                <td class="text-right"> 450 </td>
-                                <td class="text-right font-weight-medium"> 25.00% </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <i class="flag-icon flag-icon-ro"></i>
-                                </td>
-                                <td>Romania</td>
-                                <td class="text-right"> 620 </td>
-                                <td class="text-right font-weight-medium"> 10.25% </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <i class="flag-icon flag-icon-br"></i>
-                                </td>
-                                <td>Brasil</td>
-                                <td class="text-right"> 230 </td>
-                                <td class="text-right font-weight-medium"> 75.00% </td>
-                              </tr>
-                            </tbody>
-                          </table>
+                      <div class="card">
+                        <div class="card-body">
+                          <h4 class="card-title">Area chart</h4>
+                          <canvas id="areaChart" style="height:250px"></canvas>
                         </div>
-                      </div>
-                      <div class="col-md-7">
-                        <div id="audience-map" class="vector-map"></div>
                       </div>
                     </div>
                   </div>
@@ -194,29 +137,26 @@
                       <p class="text-muted mb-1">Contenido de tabla</p>
                           
                     </div>      
-                      <!-- TABLA DATOS -->
-                      
-                      <div id="tabledatos">
+                      <!-- TABLA DATOS -->                      
+                      <div id="tabledatos" class="table-responsive">
 
-                         <table>
-                    
-                   <tr class="bg-info">
-                     <th>Curso Codigo</th>
-                     <th>ID de materia</th>
-                     <th>Aprobado</th>
-                      <th>Numero de matricula</th>
-                    <th>Cedula</th>
-                      <th>Formato</th>
-                       </tr>
+                        <table class="table table-hover">
+                          <thead>
+                            <tr>
+                              <th>Curso Codigo</th>
+                              <th>ID de materia</th>
+                              <th>Aprobado</th>
+                              <th>Numero de matricula</th>
+                              <th>Cedula</th>
+                              <th>Formato</th>
+                            </tr>
+                          </thead>                          
 
-                  <tbody id="tabledata">
+                          <tbody id="tabledata">
 
-                  </tbody>
-                 </table> 
-
-
-                      </div>
-                  
+                          </tbody>
+                        </table> 
+                      </div>     
                   
                    <!-- TABLA DATOS -->          
                   </div>
@@ -230,66 +170,12 @@
                   <div class="card-body">
                     <h4 class="card-title">Figura 2</h4>
                     <div class="row">
-                      <div class="col-md-5">
-                        <div class="table-responsive">
-                          <table class="table">
-                            <tbody>
-                              <tr>
-                                <td>
-                                  <i class="flag-icon flag-icon-us"></i>
-                                </td>
-                                <td>USA</td>
-                                <td class="text-right"> 1500 </td>
-                                <td class="text-right font-weight-medium"> 56.35% </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <i class="flag-icon flag-icon-de"></i>
-                                </td>
-                                <td>Germany</td>
-                                <td class="text-right"> 800 </td>
-                                <td class="text-right font-weight-medium"> 33.25% </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <i class="flag-icon flag-icon-au"></i>
-                                </td>
-                                <td>Australia</td>
-                                <td class="text-right"> 760 </td>
-                                <td class="text-right font-weight-medium"> 15.45% </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <i class="flag-icon flag-icon-gb"></i>
-                                </td>
-                                <td>United Kingdom</td>
-                                <td class="text-right"> 450 </td>
-                                <td class="text-right font-weight-medium"> 25.00% </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <i class="flag-icon flag-icon-ro"></i>
-                                </td>
-                                <td>Romania</td>
-                                <td class="text-right"> 620 </td>
-                                <td class="text-right font-weight-medium"> 10.25% </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <i class="flag-icon flag-icon-br"></i>
-                                </td>
-                                <td>Brasil</td>
-                                <td class="text-right"> 230 </td>
-                                <td class="text-right font-weight-medium"> 75.00% </td>
-                              </tr>
-                            </tbody>
-                          </table>
+                      <div class="card">
+                        <div class="card-body">
+                          <h4 class="card-title">Pie chart</h4>
+                          <canvas id="pieChart" style="height:250px"></canvas>
                         </div>
                       </div>
-                      <div class="col-md-7">
-                        <div id="audience-map" class="vector-map"></div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -299,11 +185,114 @@
               <div class="col-md-8 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <div class="d-flex flex-row justify-content-between">
                       <h4 class="card-title mb-1">Tabla 2</h4>
                       <p class="text-muted mb-1">Contenido de tabla</p>
-
-                    </div>                    
+                      <div class="table-responsive">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th> User </th>
+                              <th> First name </th>
+                              <th> Progress </th>
+                              <th> Amount </th>
+                              <th> Deadline </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td class="py-1">
+                                <img src="../../assets/images/faces-clipart/pic-1.png" alt="image" />
+                              </td>
+                              <td> Herman Beck </td>
+                              <td>
+                                <div class="progress">
+                                  <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                              </td>
+                              <td> $ 77.99 </td>
+                              <td> May 15, 2015 </td>
+                            </tr>
+                            <tr>
+                              <td class="py-1">
+                                <img src="../../assets/images/faces-clipart/pic-2.png" alt="image" />
+                              </td>
+                              <td> Messsy Adam </td>
+                              <td>
+                                <div class="progress">
+                                  <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                              </td>
+                              <td> $245.30 </td>
+                              <td> July 1, 2015 </td>
+                            </tr>
+                            <tr>
+                              <td class="py-1">
+                                <img src="../../assets/images/faces-clipart/pic-3.png" alt="image" />
+                              </td>
+                              <td> John Richards </td>
+                              <td>
+                                <div class="progress">
+                                  <div class="progress-bar bg-warning" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                              </td>
+                              <td> $138.00 </td>
+                              <td> Apr 12, 2015 </td>
+                            </tr>
+                            <tr>
+                              <td class="py-1">
+                                <img src="../../assets/images/faces-clipart/pic-4.png" alt="image" />
+                              </td>
+                              <td> Peter Meggik </td>
+                              <td>
+                                <div class="progress">
+                                  <div class="progress-bar bg-primary" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                              </td>
+                              <td> $ 77.99 </td>
+                              <td> May 15, 2015 </td>
+                            </tr>
+                            <tr>
+                              <td class="py-1">
+                                <img src="../../assets/images/faces-clipart/pic-1.png" alt="image" />
+                              </td>
+                              <td> Edward </td>
+                              <td>
+                                <div class="progress">
+                                  <div class="progress-bar bg-danger" role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                              </td>
+                              <td> $ 160.25 </td>
+                              <td> May 03, 2015 </td>
+                            </tr>
+                            <tr>
+                              <td class="py-1">
+                                <img src="../../assets/images/faces-clipart/pic-2.png" alt="image" />
+                              </td>
+                              <td> John Doe </td>
+                              <td>
+                                <div class="progress">
+                                  <div class="progress-bar bg-info" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                              </td>
+                              <td> $ 123.21 </td>
+                              <td> April 05, 2015 </td>
+                            </tr>
+                            <tr>
+                              <td class="py-1">
+                                <img src="../../assets/images/faces-clipart/pic-3.png" alt="image" />
+                              </td>
+                              <td> Henry Tom </td>
+                              <td>
+                                <div class="progress">
+                                  <div class="progress-bar bg-warning" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                              </td>
+                              <td> $ 150.00 </td>
+                              <td> June 16, 2015 </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>                    
                   </div>
                 </div>
               </div>
@@ -364,17 +353,17 @@
  /*SCRIPT PARA COONVERTIR TABLA A PNG*/
   function downloadtable() {
 
-      var node = document.getElementById('tabledatos');  /*LLAMADA ALA TABLA POR ID */
+    var node = document.getElementById('tabledatos');  /*LLAMADA ALA TABLA POR ID */
 
-      domtoimage.toPng(node)
-          .then(function (dataUrl) {
-              var img = new Image();
-              img.src = dataUrl;
-              downloadURI(dataUrl, "tabla.png")
-          })
-          .catch(function (error) {
-              console.error('Error', error);
-          });
+    domtoimage.toPng(node)
+        .then(function (dataUrl) {
+            var img = new Image();
+            img.src = dataUrl;
+            downloadURI(dataUrl, "tabla.png")
+        })
+        .catch(function (error) {
+            console.error('Error', error);
+        });
 
   }
 
@@ -398,91 +387,88 @@
   /*SCRIPT PARA COONVERTIR TABLA A PDF*/
 	function downloadDoc(){
 
-html2canvas($("#tabledatos")[0],{   /*LLAMADA ALA TABLA POR ID */
-	onrendered:function(canvas){
-		var data=canvas.toDataURL();
-		var docDefinition={
-			content:[{
-				image:data,
-				width:500
-			}]
-		};
-		pdfMake.createPdf(docDefinition).download("Tabla.pdf");
-	}
-})
-	}
+  html2canvas($("#tabledatos")[0],{   /*LLAMADA ALA TABLA POR ID */
+    onrendered:function(canvas){
+      var data=canvas.toDataURL();
+      var docDefinition={
+        content:[{
+          image:data,
+          width:500
+        }]
+      };
+      pdfMake.createPdf(docDefinition).download("Tabla.pdf");
+    }
+  })
+}
 /*FIN SCRIPT PARA COONVERTIR TABLA A PDF*/
 </script>
 
 
 <script>
 
-    /*SCRIPT PARA COONVERTIR TABLA A EXCEL*/
+  /*SCRIPT PARA COONVERTIR TABLA A EXCEL*/
 
-    function exportData() {
- 
- // Variable to store the final csv data
- var csv_data = [];
+  function exportData() {
 
- // Get each row data
- var datos = document.getElementById('tabledatos');
- var rows = datos.getElementsByTagName('tr');
- for (var i = 0; i < rows.length; i++) {
+    // Variable to store the final csv data
+    var csv_data = [];
 
-     // Get each column data
-     var cols = rows[i].querySelectorAll('td,th');
+    // Get each row data
+    var datos = document.getElementById('tabledatos');
+    var rows = datos.getElementsByTagName('tr');
+    for (var i = 0; i < rows.length; i++) {
 
-     // Stores each csv row data
-     var csvrow = [];
-     for (var j = 0; j < cols.length; j++) {
+      // Get each column data
+      var cols = rows[i].querySelectorAll('td,th');
 
-         // Get the text data of each cell of
-         // a row and push it to csvrow
-         csvrow.push(cols[j].innerHTML);
-     }
+      // Stores each csv row data
+      var csvrow = [];
+      for (var j = 0; j < cols.length; j++) {
 
-     // Combine each column value with comma
-     csv_data.push(csvrow.join(","));
- }
- // combine each row data with new line character
- csv_data = csv_data.join('\n');
+          // Get the text data of each cell of
+          // a row and push it to csvrow
+          csvrow.push(cols[j].innerHTML);
+      }
 
- downloadCSVFile(csv_data);
+      // Combine each column value with comma
+      csv_data.push(csvrow.join(","));
+    }
+    // combine each row data with new line character
+    csv_data = csv_data.join('\n');
 
- /* We will use this function later to download
- the data in a csv file downloadCSVFile(csv_data);
- */
-}
+    downloadCSVFile(csv_data);
 
-function downloadCSVFile(csv_data) {
- 
- // Create CSV file object and feed
- // our csv_data into it
- CSVFile = new Blob([csv_data], {
-     type: "text/csv"
- });
+    /* We will use this function later to download
+    the data in a csv file downloadCSVFile(csv_data);
+    */
+  }
 
- // Create to temporary link to initiate
- // download process
- var temp_link = document.createElement('a');
+  function downloadCSVFile(csv_data) {
+  
+    // Create CSV file object and feed
+    // our csv_data into it
+    CSVFile = new Blob([csv_data], {
+        type: "text/csv"
+    });
 
- // Download csv file
- temp_link.download = "Tabla.csv";
- var url = window.URL.createObjectURL(CSVFile);
- temp_link.href = url;
+    // Create to temporary link to initiate
+    // download process
+    var temp_link = document.createElement('a');
 
- // This link should not be displayed
- temp_link.style.display = "none";
- document.body.appendChild(temp_link);
+    // Download csv file
+    temp_link.download = "Tabla.csv";
+    var url = window.URL.createObjectURL(CSVFile);
+    temp_link.href = url;
 
- // Automatically click the link to
- // trigger download
- temp_link.click();
- document.body.removeChild(temp_link);
-}
+    // This link should not be displayed
+    temp_link.style.display = "none";
+    document.body.appendChild(temp_link);
 
-
-
+    // Automatically click the link to
+    // trigger download
+    temp_link.click();
+    document.body.removeChild(temp_link);
+  }
 /*FIN SCRIPT PARA COONVERTIR TABLA A EXCEL*/
 </script>
 
@@ -495,10 +481,8 @@ function downloadCSVFile(csv_data) {
     <!-- endinject -->
     <!-- Plugin js for this page -->
     <script src="assets/vendors/chart.js/Chart.min.js"></script>
-    <script src="assets/vendors/progressbar.js/progressbar.min.js"></script>
-    <script src="assets/vendors/jvectormap/jquery-jvectormap.min.js"></script>
-    <script src="assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
     <script src="assets/vendors/owl-carousel-2/owl.carousel.min.js"></script>
+    <script src="assets/js/chart.js"></script>
     <!-- End plugin js for this page -->
     <!-- inject:js -->
     <script src="assets/js/off-canvas.js"></script>

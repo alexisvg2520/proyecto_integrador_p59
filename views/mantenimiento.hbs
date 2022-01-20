@@ -17,44 +17,69 @@
               <div class="col-12 ">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Horizontal Two column</h4>
+                    <h4 class="title">Administración de información</h4>
                     <form class="form-sample">
-                      <p class="card-description"> Personal info </p>
+                      <p class="card-description">Tenga en cuenta que usted puede agregar, modificar 
+                        o eliminar información</p>
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">First Name</label>
-                            <div class="col-sm-9">
-                              <input type="text" class="form-control" />
+                            <label class="col-sm-3 col-form-label">Tipo</label>
+                            <div class="col-sm-3">
+                              <div class="form-check">
+                                <label class="form-check-label">
+                                  <input type="radio" class="form-check-input" name="membershipRadios" id="membershipRadios1" value="" checked> Agregar </label>
+                              </div>
+                            </div>
+                            <div class="col-sm-3">
+                              <div class="form-check">
+                                <label class="form-check-label">
+                                  <input type="radio" class="form-check-input" name="membershipRadios" id="membershipRadios1" value=""> Modificar </label>
+                              </div>
+                            </div>
+                            <div class="col-sm-3">
+                              <div class="form-check">
+                                <label class="form-check-label">
+                                  <input type="radio" class="form-check-input" name="membershipRadios" id="membershipRadios2" value="option2"> Eliminar </label>
+                              </div>
                             </div>
                           </div>
                         </div>
                         <div class="col-md-6">
                           <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Last Name</label>
+                            <label class="col-sm-3 col-form-label">Dimensión</label>
                             <div class="col-sm-9">
-                              <input type="text" class="form-control" />
+                              <select class="form-control">
+                                <option selected>Escoja una Dimensión...</option>
+                                <option>DIM_1</option>
+                                <option>DIM_2</option>
+                                <option>DIM_3</option>
+                                <option>DIM_4</option>
+                                <option>DIM_5</option>
+                                <option>DIM_6</option>
+                              </select>
                             </div>
                           </div>
                         </div>
                       </div>
+                      <p class="card-description"> Datos </p>
                       <div class="row">
                         <div class="col-md-6">
                           <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Gender</label>
+                            <label class="col-sm-3 col-form-label">Atributos</label>
                             <div class="col-sm-9">
                               <select class="form-control">
-                                <option>Male</option>
-                                <option>Female</option>
+                                <option>AT_1</option>
+                                <option>AT_2</option>
                               </select>
                             </div>
                           </div>
                         </div>
                         <div class="col-md-6">
                           <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Date of Birth</label>
+                            <label class="col-sm-3 col-form-label">Descripción</label>
                             <div class="col-sm-9">
-                              <input class="form-control" placeholder="dd/mm/yyyy" />
+                              <input type="text" class="form-control" />
                             </div>
                           </div>
                         </div>
@@ -73,84 +98,11 @@
                             </div>
                           </div>
                         </div>
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Membership</label>
-                            <div class="col-sm-4">
-                              <div class="form-check">
-                                <label class="form-check-label">
-                                  <input type="radio" class="form-check-input" name="membershipRadios" id="membershipRadios1" value="" checked> Free </label>
-                              </div>
-                            </div>
-                            <div class="col-sm-5">
-                              <div class="form-check">
-                                <label class="form-check-label">
-                                  <input type="radio" class="form-check-input" name="membershipRadios" id="membershipRadios2" value="option2"> Professional </label>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
                       </div>
-                      <p class="card-description"> Address </p>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Address 1</label>
-                            <div class="col-sm-9">
-                              <input type="text" class="form-control" />
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">State</label>
-                            <div class="col-sm-9">
-                              <input type="text" class="form-control" />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Address 2</label>
-                            <div class="col-sm-9">
-                              <input type="text" class="form-control" />
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Postcode</label>
-                            <div class="col-sm-9">
-                              <input type="text" class="form-control" />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">City</label>
-                            <div class="col-sm-9">
-                              <input type="text" class="form-control" />
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Country</label>
-                            <div class="col-sm-9">
-                              <select class="form-control">
-                                <option>America</option>
-                                <option>Italy</option>
-                                <option>Russia</option>
-                                <option>Britain</option>
-                              </select>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      <div class="card-footer clearfix float-none float-sm-right d-block">
+                        <button type="submit" class="btn btn-primary mr-2">Enviar</button>
+                        <button class="btn btn-dark">Cancelar</button>    
+                      </div>                         
                     </form>
                   </div>
                 </div>
