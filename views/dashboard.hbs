@@ -3,65 +3,62 @@
   {{> header }}
   <body>
 
-    <script type="text/javascript" src="assets/js/jquery-3.6.0.min.js">/*Jquery script */</script>  
+    <script type="text/javascript" src="assets/js/jquery-3.6.0.js">/*Jquery script */</script>  
 
-    <script src="assets/js/highcharts.js"></script>
+    <script type="text/javascript" src="assets/js/highcharts.js"></script>
 
-    <script src="assets/js/dom-to-image.js"> /*dom to image script */</script>
+    <script type="text/javascript" src="assets/js/jquery.highchartTable.js"></script>
 
-    <script type="text/javascript" src="assets/js/pdfmake.min.js">/*PDF MAKE SCRIPT */</script>
+    <script type="text/javascript" src="assets/js/dom-to-image.js"> /*dom to image script */</script>
 
-    <script type="text/javascript" src="assets/js/html2canvas.min.js">/*PDF,ETC MAKE SCRIPT */</script>
+    
+    <script type="text/javascript" src="assets/js/popper.min.js">/*POPPER LIBRERIA */</script>
 
-    <script src="assets/js/popper.min.js">/*POPPER LIBRERIA */</script>
+    <script type="text/javascript" src="assets/js/jquery-ui.js"></script>
+    
 
-    <script src="assets/js/jquery-ui.js"></script>
 
-    <script src="assets/js/jquery.highchartTable.js"></script>
+ 
+
 
     <script>
         /* Cargar la tabla al incio llamada a metodo get nodejs */
-        window.onload = codeAddress;
+        
+        $(document).ready(function () {
+			$.ajax('http://localhost:3000/list',   // request url
+			{            
+				success: function (data, status, xhr) {    // success callback function
 
-        function codeAddress() {
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    const myObj = [JSON.parse(this.responseText)];  // se transforma el JSON
-                    buildTable(myObj);
-
-                }
-            };
-            xhttp.open("GET", "http://localhost:3000/list", true);
-            xhttp.send();
-        }
-
-        function buildTable(data) {
+            buildTable(data);   //  llamada ala funcion que transforma el JSON a tabla
+				}
+			});
+        });
+ 
+        function buildTable(data) {  // funcion que transforma el JSON
             var table = document.getElementById('tabledata')   // se construye la tabla apartir del JSON
             console.log(data);
             for (var i = 0; i < data.length; i++) {
                 var row = `<tr>
-                <td>${data[i].cur_codigo}</td>
-                <td>${data[i].id_materia}</td>
-                <td>${data[i].aprobada}</td>
-                              <td>${data[i].mtr_numero}</td>
-                              <td>${data[i].cedula}</td>
-                              <td>${data[i].formato}</td>
+                <td>${data[i].años}</td>
+                <td>${data[i].total}</td> 
+                <td>${data[i].masculina}</td>  
+                <td>${data[i].femenina}</td>    
                 </tr>`
                   table.innerHTML += row
 
 
             }
         }
-
-
         /*se llama ala funcion al cargar la pagina*/
         /*FIN SCRIPT TABLA AL INICIO*/
     </script>
 
+
+
+
+
+
     
-
-
     <div class="container-scroller">
       <!-- partial:partials/_sidebar.html -->
       {{> navbar }}
@@ -77,12 +74,14 @@
               <div class="col-12 grid-margin">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Figura 1</h4>
+                    <h4 class="card-title">Años vs Tasa Natalidad Total</h4>
+                    
                     <div class="row">
                       <div class="card">
                         <div class="card-body">
-                          <h4 class="card-title">Area chart</h4>
-                          <canvas id="areaChart" style="height:250px"></canvas>
+                          
+                           <div id="Grafico">
+
                         </div>
                       </div>
                     </div>
@@ -103,20 +102,12 @@
                       <option>4</option>
                       <option>5</option>
                     </select>
+                    
                     <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
-                      <div class="mb-3">
-                        <label class="form-label">Opción 2</label>
-                        <div class="form-check">
-                          <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value=""> Default </label>
-                        </div>
-                        <div class="form-check">
-                          <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2" checked> Selected </label>
-                        </div>
-                      </div>  
+
+                      <button id="boton">Generar Contenido de las tablas</button> 
                     </div>
-                  </div>
+                  
                   <div class="card-footer clearfix d-flex justify-content-center">
                     <div class="btn-group" role="group" aria-label="Basic example">
                       <button type="button" class="btn btn-danger" id="btnPDF" onclick="downloadDoc()">
@@ -126,34 +117,33 @@
                       <button type="button" class="btn btn-success" id="btnExcel" onclick="exportData()">
                         <i class="mdi mdi-file-excel btn-icon-prepend"></i>Excel</button>
                     </div>
-                  </div>  
+                  </div> 
+
+                  </div>
+                   
                 </div>
               </div>
               <div class="col-md-8 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex flex-row justify-content-between">
-                      <h4 class="card-title mb-1">Tabla 1</h4>
+                      <h4 class="card-title mb-1">Tasa natalidad por años a nivel nacional</h4>
                       <p class="text-muted mb-1">Contenido de tabla</p>
                           
                     </div>      
                       <!-- TABLA DATOS -->                      
-                      <div id="tabledatos" class="table-responsive">
+                      <div id="tabledatos" class="table-responsive table">
 
-                        <table class="table table-hover">
+                        <table class="highchart" data-graph-container="#Grafico" data-graph-type="column">
                           <thead>
                             <tr>
-                              <th>Curso Codigo</th>
-                              <th>ID de materia</th>
-                              <th>Aprobado</th>
-                              <th>Numero de matricula</th>
-                              <th>Cedula</th>
-                              <th>Formato</th>
+                              <th>Años</th>
+                              <th>Total</th>
+                              <th>Masculina</th>
+                              <th>Femenina</th>
                             </tr>
                           </thead>                          
-
                           <tbody id="tabledata">
-
                           </tbody>
                         </table> 
                       </div>     
@@ -350,6 +340,20 @@
 
    
  <script>
+   (function($){
+    $(document).ready(function() {
+       $("#boton").click(function(){
+    $('table.highchart').highchartTable();
+   })
+  });
+
+})(jQuery);
+
+</script>
+
+
+
+ <script>
  /*SCRIPT PARA COONVERTIR TABLA A PNG*/
   function downloadtable() {
 
@@ -385,21 +389,33 @@
 
 <script>
   /*SCRIPT PARA COONVERTIR TABLA A PDF*/
-	function downloadDoc(){
+	
+function downloadDoc() {
+        var sTable = document.getElementById('tabledatos').innerHTML;
 
-  html2canvas($("#tabledatos")[0],{   /*LLAMADA ALA TABLA POR ID */
-    onrendered:function(canvas){
-      var data=canvas.toDataURL();
-      var docDefinition={
-        content:[{
-          image:data,
-          width:500
-        }]
-      };
-      pdfMake.createPdf(docDefinition).download("Tabla.pdf");
+        var style = "<style>";
+        style = style + "table {width: 100%;font: 17px Calibri;}";
+        style = style + "table, th, td {border: solid 1px #DDD; border-collapse: collapse;";
+        style = style + "padding: 2px 3px;text-align: center;}";
+        style = style + "</style>";
+
+        // CREATE A WINDOW OBJECT.
+        var win = window.open('', '', 'height=700,width=700');
+
+        win.document.write('<html><head>');
+        win.document.write('<title>Profile</title>');   // <title> FOR PDF HEADER.
+        win.document.write(style);          // ADD STYLE INSIDE THE HEAD TAG.
+        win.document.write('</head>');
+        win.document.write('<body>');
+        win.document.write(sTable);         // THE TABLE CONTENTS INSIDE THE BODY TAG.
+        win.document.write('</body></html>');
+
+        win.document.close(); 	// CLOSE THE CURRENT WINDOW.
+
+        win.print();    // PRINT THE CONTENTS.
     }
-  })
-}
+
+
 /*FIN SCRIPT PARA COONVERTIR TABLA A PDF*/
 </script>
 
@@ -471,7 +487,6 @@
   }
 /*FIN SCRIPT PARA COONVERTIR TABLA A EXCEL*/
 </script>
-
 
 
 

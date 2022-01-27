@@ -13,17 +13,17 @@ const { Pool } = require('pg')
 const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
-    database: 'uni_relacional',
+    database: 'relacionaldatos',
     password: '1234',
     port: 5432,
 })
 
 app.get('/list', function(request, response) {
     console.log('GET request received at /')
-    pool.query('select * from cabecera limit 5', function(err, result) { // consulta de base de datos a postgres
+    pool.query('select * from tasanatalidad', function(err, result) { // consulta de base de datos a postgres
         if (err) throw err;
         else {
-            response.send(result.rows[0]) // se manda el JSON
+            response.send(result.rows) // se manda el JSON
         }
 
     });
