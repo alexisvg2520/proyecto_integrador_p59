@@ -18,7 +18,7 @@ const pool = new Pool({
     port: 5432,
 })
 
-app.get('/list', function(request, response) {
+app.get('/default', function(request, response) {
     console.log('GET request received at /')
     pool.query('select * from tasanatalidad', function(err, result) { // consulta de base de datos a postgres
         if (err) throw err;
@@ -28,6 +28,40 @@ app.get('/list', function(request, response) {
 
     });
 });
+
+app.get('/opcion1', function(request, response) {
+    console.log('GET request received at /')
+    pool.query('select años,masculina from tasanatalidad', function(err, result) { // consulta de base de datos a postgres
+        if (err) throw err;
+        else {
+            response.send(result.rows) // se manda el JSON
+        }
+
+    });
+});
+
+app.get('/opcion2', function(request, response) {
+    console.log('GET request received at /')
+    pool.query('select años,femenina from tasanatalidad', function(err, result) { // consulta de base de datos a postgres
+        if (err) throw err;
+        else {
+            response.send(result.rows) // se manda el JSON
+        }
+
+    });
+});
+
+app.get('/opcion3', function(request, response) {
+    console.log('GET request received at /')
+    pool.query('select años,total from tasanatalidad', function(err, result) { // consulta de base de datos a postgres
+        if (err) throw err;
+        else {
+            response.send(result.rows) // se manda el JSON
+        }
+
+    });
+});
+
 
 
 
