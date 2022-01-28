@@ -8,7 +8,12 @@ require('./hbs/helpers');
 const port = process.env.PORT || 3000;
 
 app.use(express.static(__dirname + '/public'));
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json())
+app.use(
+    bodyParser.urlencoded({
+        extended: true,
+    })
+)
 const { Pool } = require('pg')
 const pool = new Pool({
     user: 'postgres',
@@ -17,6 +22,29 @@ const pool = new Pool({
     password: '1234',
     port: 5432,
 })
+
+
+app.post('/insertar', (req, res) => {
+    const { anios, total, masculina, femenina } = req.body;
+
+    pool.query('INSERT INTO tasanatalidad (años, total, masculina, femenina) VALUES ($1, $2, $3, $4)', [anios, total, masculina, femenina], (error, results) => {
+        if (error) {
+            throw error
+        }
+
+    })
+
+    res.send({
+        anios,
+        total,
+        masculina,
+        femenina,
+    });
+});
+
+
+
+
 
 app.get('/default', function(request, response) {
     console.log('GET request received at /')

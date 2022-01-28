@@ -2,136 +2,201 @@
 <html lang="es">
   {{> header }}
   <body>
+
+    <script type="text/javascript" src="assets/js/jquery-3.6.0.js">/*Jquery script */</script>  
+
+  
+
+    
+
+    <script type="text/javascript" src="assets/js/dom-to-image.js"> /*dom to image script */</script>
+
+    
+    <script type="text/javascript" src="assets/js/popper.min.js">/*POPPER LIBRERIA */</script>
+
+    
+    
+<script src="assets/js/canvasjs.min.js"></script>
+
+ 
+
+
+   
+
+    
     <div class="container-scroller">
-      <!-- partial:../../partials/_sidebar.html -->
+      <!-- partial:partials/_sidebar.html -->
       {{> navbar }}
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
-        <!-- partial:../../partials/_navbar.html -->
+        <!-- partial:partials/_navbar.html -->
         {{> nav }}
         <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
             {{> pageheader }}
-            <div class="row">
-              <div class="col-12 ">
+                      
+             <div class="col-md-8 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="title">Administración de información</h4>
-                    <form class="form-sample">
-                      <p class="card-description">Tenga en cuenta que usted puede agregar, modificar 
-                        o eliminar información</p>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Tipo</label>
-                            <div class="col-sm-3">
-                              <div class="form-check">
-                                <label class="form-check-label">
-                                  <input type="radio" class="form-check-input" name="membershipRadios" id="membershipRadios1" value="" checked> Agregar </label>
-                              </div>
-                            </div>
-                            <div class="col-sm-3">
-                              <div class="form-check">
-                                <label class="form-check-label">
-                                  <input type="radio" class="form-check-input" name="membershipRadios" id="membershipRadios1" value=""> Modificar </label>
-                              </div>
-                            </div>
-                            <div class="col-sm-3">
-                              <div class="form-check">
-                                <label class="form-check-label">
-                                  <input type="radio" class="form-check-input" name="membershipRadios" id="membershipRadios2" value="option2"> Eliminar </label>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Dimensión</label>
-                            <div class="col-sm-9">
-                              <select class="form-control">
-                                <option selected>Escoja una Dimensión...</option>
-                                <option>DIM_1</option>
-                                <option>DIM_2</option>
-                                <option>DIM_3</option>
-                                <option>DIM_4</option>
-                                <option>DIM_5</option>
-                                <option>DIM_6</option>
-                              </select>
-                            </div>
-                          </div>
-                        </div>
+                    
+                      <h4 class="card-title mb-1">MATENIMEINTO DE DATOS</h4>
+                
+                        
+                      <div>
+                       
+                    <label class="form-label">DIMENCION</label>
+                    <select class="form-control form-control" id="filtro">
+                      <option>DIM_MUERTES_VIOLENTAS</option>  <!-- opciones de la cinta de filtros-->
+                      <option>DIM_MUERTES_NO_VIOLENTAS</option>
+                      <option>DIM_NATALIDAD</option>
+                      <option>DIM_NATALIDAD_NAJ</option>
+                      <option>DIM_FECHA</option>
+                    </select>
+                      <div style="padding-top:40px"> 
+                    
+                    <button onclick="insertar()">Insertar</button> <button>Actualizar</button> <button>Borrar</button> 
+                   
+                      <div id="form1">
+
                       </div>
-                      <p class="card-description"> Datos </p>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Atributos</label>
-                            <div class="col-sm-9">
-                              <select class="form-control">
-                                <option>AT_1</option>
-                                <option>AT_2</option>
-                              </select>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Descripción</label>
-                            <div class="col-sm-9">
-                              <input type="text" class="form-control" />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Category</label>
-                            <div class="col-sm-9">
-                              <select class="form-control">
-                                <option>Category1</option>
-                                <option>Category2</option>
-                                <option>Category3</option>
-                                <option>Category4</option>
-                              </select>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="card-footer clearfix float-none float-sm-right d-block">
-                        <button type="submit" class="btn btn-primary mr-2">Enviar</button>
-                        <button class="btn btn-dark">Cancelar</button>    
-                      </div>                         
-                    </form>
+                                
+                                  
+                        
                   </div>
                 </div>
               </div>
-            </div>            
+            <!-- Figura 2-->
+            
+
+            
+             
+              
+            
+                       
           </div>
           <!-- content-wrapper ends -->
-          <!-- partial:../../partials/_footer.html -->
-          {{> footer }}
+          <!-- partial:partials/_footer.html -->
+          
           <!-- partial -->
         </div>
+        {{> footer }}
         <!-- main-panel ends -->
       </div>
       <!-- page-body-wrapper ends -->
     </div>
+
+   
+<script>
+  var veces=1;
+function insertar(){
+ const valor = document.getElementById('filtro');    /*SELECCIONAMOS LA CINTA DE OPCIONES POR SU ID FILTRO */
+const opcion = valor.options[valor.selectedIndex].text;  /*OBTENENMOS EL TEXTO DEPENDIENDO LA OPCION QUE ELIGA LA CINTA*/
+  
+  switch(opcion) { 
+  case "DIM_NATALIDAD":
+  if(veces==1){
+veces=veces-1;
+  
+  $(document).ready(function() {
+    
+$("div#form1").append(
+// Creating Form Div and Adding <h2> and <p> Paragraph Tag in it.
+$("<p/>").text("Inserte los datos para la dimension selccionada"), $("<form/>", {
+action: '#',
+method: '#'
+}).append(
+// Create <form> Tag and Appending in HTML Div form1.
+$("<input/>", {
+type: 'text',
+id: 'vaño',
+name: 'año',
+placeholder: 'Año'
+}), // Creating Input Element With Attribute.
+$("<input/>", {
+type: 'text',
+id: 'vtotal',
+name: 'total',
+placeholder: 'Total'
+}), $("<input/>", {
+type: 'text',
+id: 'vMasculinidad',
+name: 'Masculinidad',
+placeholder: 'Masculinidad'
+}),$("<input/>", {
+type: 'text',
+id: 'vmFemenina',
+name: 'Femenina',
+placeholder: 'Femenina'
+}), $("<br/>"), $("<input/>", {
+type: 'button',
+id: 'enviar',
+value: 'enviar'
+})))
+});
+}
+
+$(document).ready(function(){
+  $("#enviar").click(function(){
+    let anios = document.getElementById("vaño").value;
+    let total = document.getElementById("vtotal").value;
+    let masculina = document.getElementById("vMasculinidad").value;
+    let femenina = document.getElementById("vmFemenina").value;
+    $.post("http://localhost:3000/insertar",
+    {
+      anios: anios,
+      total: total,
+      masculina: masculina,
+      femenina: femenina
+    },
+    
+    function(data,status){
+      alert("Data: " + data + "\nStatus: " + status + "\nEnvio Correcto");
+    });
+  });
+});
+
+break;
+}
+
+
+  
+  
+} /// fin funcion tablita
+  
+  
+</script>
+
+<script>
+
+    
+
+</script>
+
+
+
+ 
+
+
+
+
     <!-- container-scroller -->
     <!-- plugins:js -->
-    <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
+    <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
+    
+    <script src="assets/vendors/owl-carousel-2/owl.carousel.min.js"></script>
+  
     <!-- End plugin js for this page -->
     <!-- inject:js -->
-    <script src="../../assets/js/off-canvas.js"></script>
-    <script src="../../assets/js/hoverable-collapse.js"></script>
-    <script src="../../assets/js/misc.js"></script>
-    <script src="../../assets/js/settings.js"></script>
-    <script src="../../assets/js/todolist.js"></script>
-    <!-- endinject -->
-    <!-- Custom js for this page -->
+    <script src="assets/js/off-canvas.js"></script>
+    <script src="assets/js/hoverable-collapse.js"></script>
+    
     <!-- End custom js for this page -->
+
+    
+
+
   </body>
 </html>

@@ -97,7 +97,7 @@ var datos1 = [];
 var datos2 = [];
 var chart = new CanvasJS.Chart("Grafico", {
 	animationEnabled: true,
-	theme: "light2",
+	theme: "dark2",
 	title: {
 		text: ""
 	},
@@ -107,17 +107,17 @@ var chart = new CanvasJS.Chart("Grafico", {
 		includeZero: true
 	},
 	data: [{
-		type: "bar",
+		type: "column",
 		yValueFormatString: "#,###.## Units",
 		dataPoints: datos
   },
   {
-	  type: "bar",
+	  type: "column",
 		yValueFormatString: "#,###.## Units",
 		dataPoints: datos1
   },
   {
-    type: "bar",
+    type: "column",
 		yValueFormatString: "#,###.## Units",
 		dataPoints: datos2
   
@@ -148,6 +148,79 @@ function addData(data) {
 
 }
 
+
+}
+</script>
+
+
+<script>
+function generaractual() {
+
+var datos = [];
+var datos1 = [];
+var datos2 = [];
+var chart = new CanvasJS.Chart("Grafico", {
+	animationEnabled: true,
+	theme: "dark2",
+	title: {
+		text: ""
+	},
+	axisY: {
+		title: "Tasa Total Hombre Mujeres",
+		titleFontSize: 24,
+		includeZero: true
+	},
+	data: [{
+		type: "column",
+		yValueFormatString: "#,###.## Units",
+		dataPoints: datos
+  },
+  {
+	  type: "column",
+		yValueFormatString: "#,###.## Units",
+		dataPoints: datos1
+  },
+  {
+    type: "column",
+		yValueFormatString: "#,###.## Units",
+		dataPoints: datos2
+  
+	}]
+});
+$.getJSON("http://localhost:3000/default", addData);
+function addData(data) {
+	for (var i = 0; i < data.length; i++) {
+		datos.push({
+			x: new Date(data[i].años),
+			y: parseFloat(data[i].total)
+      
+		});
+    	datos1.push({
+			x: new Date(data[i].años),
+			y: parseFloat(data[i].masculina)
+      
+		});
+    datos2.push({
+			x: new Date(data[i].años),
+			y: parseFloat(data[i].masculina)
+      
+		});
+	}
+
+  
+	chart.render();
+
+}
+
+   $(document).ready(function () {
+			$.ajax('http://localhost:3000/default',   // request url
+			{            
+				success: function (data, status, xhr) {    // success callback function
+
+           convertJsontoHtmlTable(data);   //  llamada ala funcion que transforma el JSON a tabla
+				}
+			});
+        });
 
 }
 </script>
@@ -200,7 +273,7 @@ function addData(data) {
                      
                      
                       
-                      <button onclick="cargarnuevatabla()">Generar Tabla</button><button onclick="window.location.reload();">Generar Tabla Inicial</button>
+                      <button onclick="cargarnuevatabla()">Generar Tabla</button><button onclick="generaractual()">Generar Tabla Inicial</button>
                   
                       
                       
@@ -444,7 +517,7 @@ const valor = document.getElementById('filtro');    /*SELECCIONAMOS LA CINTA DE 
            var datos = [];
 var chart = new CanvasJS.Chart("Grafico", {
 	animationEnabled: true,
-	theme: "light2",
+	theme: "dark2",
 	title: {
 		text: ""
 	},
@@ -488,7 +561,7 @@ function addData(data) {
            var datos = [];
 var chart = new CanvasJS.Chart("Grafico", {
 	animationEnabled: true,
-	theme: "light2",
+	theme: "dark2",
 	title: {
 		text: ""
 	},
@@ -533,7 +606,7 @@ function addData(data) {
           var datos = [];
 var chart = new CanvasJS.Chart("Grafico", {
 	animationEnabled: true,
-	theme: "light2",
+	theme: "dark2",
 	title: {
 		text: ""
 	},
@@ -723,19 +796,14 @@ function downloadDoc() {
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
-    <script src="assets/vendors/chart.js/Chart.min.js"></script>
+    
     <script src="assets/vendors/owl-carousel-2/owl.carousel.min.js"></script>
-    <script src="assets/js/chart.js"></script>
+  
     <!-- End plugin js for this page -->
     <!-- inject:js -->
     <script src="assets/js/off-canvas.js"></script>
     <script src="assets/js/hoverable-collapse.js"></script>
-    <script src="assets/js/misc.js"></script>
-    <script src="assets/js/settings.js"></script>
-    <script src="assets/js/todolist.js"></script>
-    <!-- endinject -->
-    <!-- Custom js for this page -->
-    <script src="assets/js/dashboard.js"></script>
+    
     <!-- End custom js for this page -->
 
     
