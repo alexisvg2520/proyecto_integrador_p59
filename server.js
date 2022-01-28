@@ -24,6 +24,71 @@ const pool = new Pool({
 })
 
 
+app.post('/actualizarm', (req, res) => {
+    const { anios, masculina } = req.body;
+
+    pool.query(`UPDATE tasanatalidad SET masculina = $2 WHERE años = $1`, [anios, masculina], (error, results) => {
+        if (error) {
+            throw error
+        }
+
+    })
+
+    res.send({
+        anios,
+        masculina,
+    });
+});
+
+app.post('/actualizarf', (req, res) => {
+    const { anios, femenina } = req.body;
+
+    pool.query(`UPDATE tasanatalidad SET femenina = $2 WHERE años = $1`, [anios, femenina], (error, results) => {
+        if (error) {
+            throw error
+        }
+
+    })
+
+    res.send({
+        anios,
+        femenina,
+    });
+});
+
+app.post('/actualizart', (req, res) => {
+    const { anios, total } = req.body;
+
+    pool.query(`UPDATE tasanatalidad SET total = $2 WHERE años = $1`, [anios, total], (error, results) => {
+        if (error) {
+            throw error
+        }
+
+    })
+
+    res.send({
+        anios,
+        total,
+    });
+});
+
+app.post('/borrar', (req, res) => {
+    const { anios } = req.body;
+
+    pool.query(`DELETE FROM tasanatalidad WHERE años = $1`, [anios], (error, results) => {
+        if (error) {
+            throw error
+        }
+
+    })
+    res.send({
+        anios,
+    });
+});
+
+
+
+
 app.post('/insertar', (req, res) => {
     const { anios, total, masculina, femenina } = req.body;
 

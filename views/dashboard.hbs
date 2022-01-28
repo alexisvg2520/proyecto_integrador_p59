@@ -138,7 +138,7 @@ function addData(data) {
 		});
     datos2.push({
 			x: new Date(data[i].años),
-			y: parseFloat(data[i].masculina)
+			y: parseFloat(data[i].femenina)
       
 		});
 	}
@@ -202,7 +202,7 @@ function addData(data) {
 		});
     datos2.push({
 			x: new Date(data[i].años),
-			y: parseFloat(data[i].masculina)
+			y: parseFloat(data[i].femenina)
       
 		});
 	}
@@ -310,179 +310,9 @@ function addData(data) {
                 </div>
               </div>
             </div>
-            <!-- Figura 2-->
-            <div class="row">
-              <div class="col-12 grid-margin">
-                <div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title">Figura 2</h4>
-                    <div class="row">
-                      <div class="card">
-                        <div class="card-body">
-                          <h4 class="card-title">Pie chart</h4>
-                          <canvas id="pieChart" style="height:250px"></canvas>
-                        </div>
-                      </div>
-                  </div>
-                </div>
-              </div>
-            </div>   
+            
 
-            <div class="row">
-              <div class="col-md-8 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                      <h4 class="card-title mb-1">Tabla 2</h4>
-                      <p class="text-muted mb-1">Contenido de tabla</p>
-                      <div class="table-responsive">
-                        <table class="table table-striped">
-                          <thead>
-                            <tr>
-                              <th> User </th>
-                              <th> First name </th>
-                              <th> Progress </th>
-                              <th> Amount </th>
-                              <th> Deadline </th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td class="py-1">
-                                <img src="../../assets/images/faces-clipart/pic-1.png" alt="image" />
-                              </td>
-                              <td> Herman Beck </td>
-                              <td>
-                                <div class="progress">
-                                  <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                              </td>
-                              <td> $ 77.99 </td>
-                              <td> May 15, 2015 </td>
-                            </tr>
-                            <tr>
-                              <td class="py-1">
-                                <img src="../../assets/images/faces-clipart/pic-2.png" alt="image" />
-                              </td>
-                              <td> Messsy Adam </td>
-                              <td>
-                                <div class="progress">
-                                  <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                              </td>
-                              <td> $245.30 </td>
-                              <td> July 1, 2015 </td>
-                            </tr>
-                            <tr>
-                              <td class="py-1">
-                                <img src="../../assets/images/faces-clipart/pic-3.png" alt="image" />
-                              </td>
-                              <td> John Richards </td>
-                              <td>
-                                <div class="progress">
-                                  <div class="progress-bar bg-warning" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                              </td>
-                              <td> $138.00 </td>
-                              <td> Apr 12, 2015 </td>
-                            </tr>
-                            <tr>
-                              <td class="py-1">
-                                <img src="../../assets/images/faces-clipart/pic-4.png" alt="image" />
-                              </td>
-                              <td> Peter Meggik </td>
-                              <td>
-                                <div class="progress">
-                                  <div class="progress-bar bg-primary" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                              </td>
-                              <td> $ 77.99 </td>
-                              <td> May 15, 2015 </td>
-                            </tr>
-                            <tr>
-                              <td class="py-1">
-                                <img src="../../assets/images/faces-clipart/pic-1.png" alt="image" />
-                              </td>
-                              <td> Edward </td>
-                              <td>
-                                <div class="progress">
-                                  <div class="progress-bar bg-danger" role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                              </td>
-                              <td> $ 160.25 </td>
-                              <td> May 03, 2015 </td>
-                            </tr>
-                            <tr>
-                              <td class="py-1">
-                                <img src="../../assets/images/faces-clipart/pic-2.png" alt="image" />
-                              </td>
-                              <td> John Doe </td>
-                              <td>
-                                <div class="progress">
-                                  <div class="progress-bar bg-info" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                              </td>
-                              <td> $ 123.21 </td>
-                              <td> April 05, 2015 </td>
-                            </tr>
-                            <tr>
-                              <td class="py-1">
-                                <img src="../../assets/images/faces-clipart/pic-3.png" alt="image" />
-                              </td>
-                              <td> Henry Tom </td>
-                              <td>
-                                <div class="progress">
-                                  <div class="progress-bar bg-warning" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                              </td>
-                              <td> $ 150.00 </td>
-                              <td> June 16, 2015 </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>                    
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title">Filtros</h4>
-                    <label class="form-label">Opciones</label>
-                    <select class="form-control form-control" id="exampleFormControlSelect3">
-                      <option selected>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                    </select>
-                    <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
-                      <div class="mb-3">
-                        <label class="form-label">Opción 2</label>
-                        <div class="form-check">
-                          <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value=""> Default </label>
-                        </div>
-                        <div class="form-check">
-                          <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2" checked> Selected </label>
-                        </div>
-                      </div>  
-                    </div>                    
-                  </div>  
-                  <div class="card-footer clearfix d-flex justify-content-center">
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                      <button type="button" class="btn btn-danger" id="btnPDF" >
-                        <i class="mdi mdi-file-pdf btn-icon-prepend"></i>PDF</button>
-                      <button type="button" class="btn btn-info" id="btnPNG" >
-                        <i class="mdi mdi-file-image btn-icon-prepend"></i>PNG</button>
-                      <button type="button" class="btn btn-success" id="btnExcel">
-                        <i class="mdi mdi-file-excel btn-icon-prepend"></i>Excel</button>
-                    </div>
-                  </div>                
-                </div>
-              </div>
-              
-            </div>
+          
                        
           </div>
           <!-- content-wrapper ends -->

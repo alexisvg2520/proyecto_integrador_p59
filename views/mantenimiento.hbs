@@ -55,7 +55,7 @@
                     </select>
                       <div style="padding-top:40px"> 
                     
-                    <button onclick="insertar()">Insertar</button> <button>Actualizar</button> <button>Borrar</button> 
+                    <button onclick="insertar()">Insertar</button> <button onclick="actualizar()">Actualizar</button><button onclick="borrar()">Borrar</button> 
                    
                       <div id="form1">
 
@@ -159,20 +159,186 @@ $(document).ready(function(){
 break;
 }
 
-
-  
-  
 } /// fin funcion tablita
   
   
 </script>
 
 <script>
+ var veces=1;
+function actualizar(){
+ const valor = document.getElementById('filtro');    /*SELECCIONAMOS LA CINTA DE OPCIONES POR SU ID FILTRO */
+const opcion = valor.options[valor.selectedIndex].text;  /*OBTENENMOS EL TEXTO DEPENDIENDO LA OPCION QUE ELIGA LA CINTA*/
+  
+  switch(opcion) { 
+  case "DIM_NATALIDAD":
+  if(veces==1){
+veces=veces-1;
+  
+  $(document).ready(function() {
+    
+$("div#form1").append(
+// Creating Form Div and Adding <h2> and <p> Paragraph Tag in it.
+$("<p/>").text("Inserte los datos para la actualizacion de la dimension selccionada"), $("<form/>", {
+action: '#',
+method: '#'
+}).append(
+// Create <form> Tag and Appending in HTML Div form1.
+$("<input/>", {
+type: 'text',
+id: 'vaño',
+name: 'año',
+placeholder: 'Año'
+}), // Creating Input Element With Attribute.
+$("<input/>", {
+type: 'text',
+id: 'vtotal',
+name: 'total',
+placeholder: 'Total'
+}), $("<input/>", {
+type: 'text',
+id: 'vMasculinidad',
+name: 'Masculinidad',
+placeholder: 'Masculinidad'
+}),$("<input/>", {
+type: 'text',
+id: 'vmFemenina',
+name: 'Femenina',
+placeholder: 'Femenina'
+}), $("<br/>"), $("<input/>", {
+type: 'button',
+id: 'actualizart',
+value: 'ActualizarTotal'
+}), $("<br/>"), $("<input/>", {
+type: 'button',
+id: 'actualizarf',
+value: 'ActualizarTasaF'
+})
+, $("<br/>"), $("<input/>", {
+type: 'button',
+id: 'actualizarm',
+value: 'ActualizarTasaM'
+})
+))
+});
 
+}
+
+$(document).ready(function(){
+  $("#actualizart").click(function(){
+    let anios = document.getElementById("vaño").value;
+    let total = document.getElementById("vtotal").value;
+    $.post("http://localhost:3000/actualizart",
+    {
+      anios: anios,
+      total: total
+    },
+    
+    function(data,status){
+      alert("Data: " + data + "\nStatus: " + status + "\nEnvio Correcto");
+    });
+  });
+});
+
+$(document).ready(function(){
+  $("#actualizarm").click(function(){
+    let anios = document.getElementById("vaño").value;
+    let masculina = document.getElementById("vMasculinidad").value;
+    $.post("http://localhost:3000/actualizarm",
+    {
+      anios: anios,
+      masculina: masculina
+    },
+    
+    function(data,status){
+      alert("Data: " + data + "\nStatus: " + status + "\nEnvio Correcto");
+    });
+  });
+});
+
+
+$(document).ready(function(){
+  $("#actualizarf").click(function(){
+    let anios = document.getElementById("vaño").value;
+    let femenina = document.getElementById("vmFemenina").value;
+    $.post("http://localhost:3000/actualizarf",
+    {
+      anios: anios,
+      femenina: femenina
+    },
+    
+    function(data,status){
+      alert("Data: " + data + "\nStatus: " + status + "\nEnvio Correcto");
+    });
+  });
+});
+
+break;
+}
+
+} 
     
 
 </script>
 
+
+<script>
+ var veces=1;
+function borrar(){
+ const valor = document.getElementById('filtro');    /*SELECCIONAMOS LA CINTA DE OPCIONES POR SU ID FILTRO */
+const opcion = valor.options[valor.selectedIndex].text;  /*OBTENENMOS EL TEXTO DEPENDIENDO LA OPCION QUE ELIGA LA CINTA*/
+  
+  switch(opcion) { 
+  case "DIM_NATALIDAD":
+  if(veces==1){
+veces=veces-1;
+  
+  $(document).ready(function() {
+    
+$("div#form1").append(
+// Creating Form Div and Adding <h2> and <p> Paragraph Tag in it.
+$("<p/>").text("Inserte el dato comun para borrar la fila de la dimension selccionada"), $("<form/>", {
+action: '#',
+method: '#'
+}).append(
+// Create <form> Tag and Appending in HTML Div form1.
+$("<input/>", {
+type: 'text',
+id: 'vaño',
+name: 'año',
+placeholder: 'Año'
+}), $("<br/>"), $("<input/>", {
+type: 'button',
+id: 'borrar',
+value: 'BORRAR'
+})
+))
+});
+
+}
+
+$(document).ready(function(){
+  $("#borrar").click(function(){
+    let anios = document.getElementById("vaño").value;
+    $.post("http://localhost:3000/borrar",
+    {
+      anios: anios
+    },
+    
+    function(data,status){
+      alert("Data: " + data + "\nStatus: " + status + "\nEnvio Correcto");
+    });
+  });
+});
+
+
+break;
+}
+
+} 
+    
+
+</script>
 
 
  
