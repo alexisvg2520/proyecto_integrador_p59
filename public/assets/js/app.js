@@ -1,111 +1,25 @@
-  <!-- partial:partials/_header -->
-  {{> header }}
-  <body>    
-    <div class="container-scroller">
-      <!-- partial:partials/_sidebar -->
-      {{> sidebar }}
-      <!-- partial -->
-      <div class="container-fluid page-body-wrapper">
-        <!-- partial:partials/_navbar -->
-        {{> navbar }}
-        <!-- partial -->
-        <div class="main-panel">
-          <div class="content-wrapper">
-            <!-- partial:partials/_page_header -->
-            {{> pageheader }}
-            <div class="row">
-              <div class="col-12 grid-margin">
-                <div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title">Años vs Tasa Natalidad Total</h4>
-                    <div class="row">
-                      <div class="card">
-                        <div class="card-body">
-                          <div id="Grafico" style="height: 370px; width: 100%;"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div> 
-            </div>             
-            <div class="row">
-              <div class="col-md-4 grid-margin stretch-card">
-                <div class="card">
-                  {{!-- controles --}}
-                  <div class="card-body">
-                    {{!-- Filtros --}}
-                    <h4 class="card-title">Filtros</h4>
-                    <select class="form-control form-control text-light" id="filtro">
-                      <option>Año-Genero-Masculino</option>  <!-- opciones de la cinta de filtros-->
-                      <option>Año-Genero-Femenino</option>
-                      <option>Año-Total</option>
-                    </select>
-                    <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">        
-                      <button onclick="cargarnuevatabla()">Generar Tabla</button>
-                      <button onclick="generaractual()">Generar Tabla Inicial</button>              
-                    </div>
-                    {{!-- Exportaciones --}}
-                    <div class="card-footer clearfix d-flex justify-content-center">
-                      <div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-danger" id="btnPDF" onclick="downloadDoc()">
-                          <i class="mdi mdi-file-pdf btn-icon-prepend"></i>PDF</button>
-                        <button type="button" class="btn btn-info" id="btnPNG" onclick="downloadtable()">
-                          <i class="mdi mdi-file-image btn-icon-prepend"></i>PNG</button>
-                        <button type="button" class="btn btn-success" id="btnExcel" onclick="exportData()">
-                          <i class="mdi mdi-file-excel btn-icon-prepend"></i>Excel</button>
-                      </div>
-                    </div> 
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-8 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex flex-row justify-content-between">
-                      <h4 class="card-title mb-1">Tabla por años</h4>
-                      <p class="text-muted mb-1">Contenido de tabla</p>    
-                    </div class="table-responsive">      
-                      {{!-- Datos de la tabla --}}                      
-                      <div class="table table-dark" id="tabledata"></div>         
-                  </div>
-                </div>
-              </div>
-            </div>       
-          </div>
-          <!-- content-wrapper ends -->
-          <!-- partial:partials/_footer -->
-          {{> footer }}
-          <!-- partial -->
-        </div>
-        <!-- main-panel ends -->
-      </div>
-      <!-- page-body-wrapper ends -->
-    </div>
-    <!-- container-scroller ends -->
-    
-    <!-- plugins:js -->
-    <script src="assets/vendors/js/vendor.bundle.base.js"></script>
-    <script type="text/javascript" src="assets/js/jquery-3.6.0.js"></script> 
-    <script type="text/javascript" src="assets/js/dom-to-image.js"></script>
-    <script type="text/javascript" src="assets/js/popper.min.js"></script>
-    <script type="text/javascript" src="assets/js/canvasjs.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <!-- endinject -->
-    <!-- Plugin js for this page -->
-    <script src="assets/vendors/owl-carousel-2/owl.carousel.min.js"></script>
-    <!-- End plugin js for this page -->
-    <!-- inject:js -->
-    <script src="assets/js/off-canvas.js"></script>
-    <script src="assets/js/hoverable-collapse.js"></script>
-    <script src="assets/js/settings.js"></script>
-    <script src="assets/js/misc.js"></script>
-    <!-- endinject -->
-    <!-- Custom js for this page -->
-    {{!-- <script src="assets/js/app.js"></script> --}}
-    <!-- End custom js for this page -->
-    {{!-- /* Cargar la tabla al incio llamada a metodo get nodejs */ --}}
-    <script>      
+var x=3;  
+
+function myFunction() {
+    if(document.getElementById('inputPassword').value=='1234' && document.getElementById('inputEmail').value=='milton'){
+        location.replace("/dashboard")
+
+    }
+    else{
+        
+        if(x==0){
+            document.getElementById('times').innerHTML="No hay mas intentos , Recarge la pagina para volver a intentarlo";
+            
+            }
+            else{
+            document.getElementById('times').innerHTML="Numero de Intento "+x;
+            x=x-1;    
+            }
+        
+    }
+}
+
+<script>      
       function   cargarnuevatabla() {
         const valor = document.getElementById('filtro');    /*SELECCIONAMOS LA CINTA DE OPCIONES POR SU ID FILTRO */
         const opcion = valor.options[valor.selectedIndex].text;  /*OBTENENMOS EL TEXTO DEPENDIENDO LA OPCION QUE ELIGA LA CINTA*/
@@ -423,7 +337,7 @@
           tableemployee.classList.add("table");
           tableemployee.classList.add("table-striped");
           tableemployee.classList.add("table-bordered");
-          tableemployee.classList.add("table-dark");
+          tableemployee.classList.add("table-light");
           //Creating header of the HTML table using
           //tr
           var tr = tableemployee.insertRow(-1);
@@ -588,8 +502,256 @@
 
   }
   </script>
+    
+  <script>
+      var veces=1;
+    function insertar(){
+    const valor = document.getElementById('filtro');    /*SELECCIONAMOS LA CINTA DE OPCIONES POR SU ID FILTRO */
+    const opcion = valor.options[valor.selectedIndex].text;  /*OBTENENMOS EL TEXTO DEPENDIENDO LA OPCION QUE ELIGA LA CINTA*/
+      
+      switch(opcion) { 
+      case "DIM_NATALIDAD":
+      if(veces==1){
+    veces=veces-1;
+      
+      $(document).ready(function() {
+        
+    $("div#form1").append(
+    // Creating Form Div and Adding <h2> and <p> Paragraph Tag in it.
+    $("<p/>").text("Inserte los datos para la dimension selccionada"), $("<form/>", {
+    action: '#',
+    method: '#'
+    }).append(
+    // Create <form> Tag and Appending in HTML Div form1.
+    $("<input/>", {
+    type: 'text',
+    id: 'vaño',
+    name: 'año',
+    placeholder: 'Año'
+    }), // Creating Input Element With Attribute.
+    $("<input/>", {
+    type: 'text',
+    id: 'vtotal',
+    name: 'total',
+    placeholder: 'Total'
+    }), $("<input/>", {
+    type: 'text',
+    id: 'vMasculinidad',
+    name: 'Masculinidad',
+    placeholder: 'Masculinidad'
+    }),$("<input/>", {
+    type: 'text',
+    id: 'vmFemenina',
+    name: 'Femenina',
+    placeholder: 'Femenina'
+    }), $("<br/>"), $("<input/>", {
+    type: 'button',
+    id: 'enviar',
+    value: 'enviar'
+    })))
+    });
+    }
 
-  </body>
-</html>
+    $(document).ready(function(){
+      $("#enviar").click(function(){
+        let anios = document.getElementById("vaño").value;
+        let total = document.getElementById("vtotal").value;
+        let masculina = document.getElementById("vMasculinidad").value;
+        let femenina = document.getElementById("vmFemenina").value;
+        $.post("http://localhost:3000/insertar",
+        {
+          anios: anios,
+          total: total,
+          masculina: masculina,
+          femenina: femenina
+        },
+        
+        function(data,status){
+          alert("Data: " + data + "\nStatus: " + status + "\nEnvio Correcto");
+        });
+      });
+    });
 
-         
+    break;
+    }
+
+    } /// fin funcion tablita
+      
+      
+    </script>
+
+    <script>
+    var veces=1;
+    function actualizar(){
+    const valor = document.getElementById('filtro');    /*SELECCIONAMOS LA CINTA DE OPCIONES POR SU ID FILTRO */
+    const opcion = valor.options[valor.selectedIndex].text;  /*OBTENENMOS EL TEXTO DEPENDIENDO LA OPCION QUE ELIGA LA CINTA*/
+      
+      switch(opcion) { 
+      case "DIM_NATALIDAD":
+      if(veces==1){
+    veces=veces-1;
+      
+      $(document).ready(function() {
+        
+    $("div#form1").append(
+    // Creating Form Div and Adding <h2> and <p> Paragraph Tag in it.
+    $("<p/>").text("Inserte los datos para la actualizacion de la dimension selccionada"), $("<form/>", {
+    action: '#',
+    method: '#'
+    }).append(
+    // Create <form> Tag and Appending in HTML Div form1.
+    $("<input/>", {
+    type: 'text',
+    id: 'vaño',
+    name: 'año',
+    placeholder: 'Año'
+    }), // Creating Input Element With Attribute.
+    $("<input/>", {
+    type: 'text',
+    id: 'vtotal',
+    name: 'total',
+    placeholder: 'Total'
+    }), $("<input/>", {
+    type: 'text',
+    id: 'vMasculinidad',
+    name: 'Masculinidad',
+    placeholder: 'Masculinidad'
+    }),$("<input/>", {
+    type: 'text',
+    id: 'vmFemenina',
+    name: 'Femenina',
+    placeholder: 'Femenina'
+    }), $("<br/>"), $("<input/>", {
+    type: 'button',
+    id: 'actualizart',
+    value: 'ActualizarTotal'
+    }), $("<br/>"), $("<input/>", {
+    type: 'button',
+    id: 'actualizarf',
+    value: 'ActualizarTasaF'
+    })
+    , $("<br/>"), $("<input/>", {
+    type: 'button',
+    id: 'actualizarm',
+    value: 'ActualizarTasaM'
+    })
+    ))
+    });
+
+    }
+
+    $(document).ready(function(){
+      $("#actualizart").click(function(){
+        let anios = document.getElementById("vaño").value;
+        let total = document.getElementById("vtotal").value;
+        $.post("http://localhost:3000/actualizart",
+        {
+          anios: anios,
+          total: total
+        },
+        
+        function(data,status){
+          alert("Data: " + data + "\nStatus: " + status + "\nEnvio Correcto");
+        });
+      });
+    });
+
+    $(document).ready(function(){
+      $("#actualizarm").click(function(){
+        let anios = document.getElementById("vaño").value;
+        let masculina = document.getElementById("vMasculinidad").value;
+        $.post("http://localhost:3000/actualizarm",
+        {
+          anios: anios,
+          masculina: masculina
+        },
+        
+        function(data,status){
+          alert("Data: " + data + "\nStatus: " + status + "\nEnvio Correcto");
+        });
+      });
+    });
+
+
+    $(document).ready(function(){
+      $("#actualizarf").click(function(){
+        let anios = document.getElementById("vaño").value;
+        let femenina = document.getElementById("vmFemenina").value;
+        $.post("http://localhost:3000/actualizarf",
+        {
+          anios: anios,
+          femenina: femenina
+        },
+        
+        function(data,status){
+          alert("Data: " + data + "\nStatus: " + status + "\nEnvio Correcto");
+        });
+      });
+    });
+
+    break;
+    }
+
+    } 
+        
+
+    </script>
+
+
+    <script>
+    var veces=1;
+    function borrar(){
+    const valor = document.getElementById('filtro');    /*SELECCIONAMOS LA CINTA DE OPCIONES POR SU ID FILTRO */
+    const opcion = valor.options[valor.selectedIndex].text;  /*OBTENENMOS EL TEXTO DEPENDIENDO LA OPCION QUE ELIGA LA CINTA*/
+      
+      switch(opcion) { 
+      case "DIM_NATALIDAD":
+      if(veces==1){
+    veces=veces-1;
+      
+      $(document).ready(function() {
+        
+    $("div#form1").append(
+    // Creating Form Div and Adding <h2> and <p> Paragraph Tag in it.
+    $("<p/>").text("Inserte el dato comun para borrar la fila de la dimension selccionada"), $("<form/>", {
+    action: '#',
+    method: '#'
+    }).append(
+    // Create <form> Tag and Appending in HTML Div form1.
+    $("<input/>", {
+    type: 'text',
+    id: 'vaño',
+    name: 'año',
+    placeholder: 'Año'
+    }), $("<br/>"), $("<input/>", {
+    type: 'button',
+    id: 'borrar',
+    value: 'BORRAR'
+    })
+    ))
+    });
+
+    }
+
+    $(document).ready(function(){
+      $("#borrar").click(function(){
+        let anios = document.getElementById("vaño").value;
+        $.post("http://localhost:3000/borrar",
+        {
+          anios: anios
+        },
+        
+        function(data,status){
+          alert("Data: " + data + "\nStatus: " + status + "\nEnvio Correcto");
+        });
+      });
+    });
+
+
+    break;
+    }
+
+    } 
+        
+
+    </script>

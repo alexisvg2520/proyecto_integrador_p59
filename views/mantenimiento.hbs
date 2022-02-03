@@ -1,50 +1,23 @@
-<!DOCTYPE html>
-<html lang="es">
+  <!-- partial:partials/_header -->
   {{> header }}
   <body>
-
-    <script type="text/javascript" src="assets/js/jquery-3.6.0.js">/*Jquery script */</script>  
-
-  
-
-    
-
-    <script type="text/javascript" src="assets/js/dom-to-image.js"> /*dom to image script */</script>
-
-    
-    <script type="text/javascript" src="assets/js/popper.min.js">/*POPPER LIBRERIA */</script>
-
-    
-    
-<script src="assets/js/canvasjs.min.js"></script>
-
- 
-
-
-   
-
-    
     <div class="container-scroller">
       <!-- partial:partials/_sidebar.html -->
-      {{> navbar }}
+      {{> sidebar }}
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
         <!-- partial:partials/_navbar.html -->
-        {{> nav }}
+        {{> navbar }}
         <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
-            {{> pageheader }}
-                      
-             <div class="col-md-8 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    
-                      <h4 class="card-title mb-1">MATENIMEINTO DE DATOS</h4>
-                
-                        
-                      <div>
-                       
+            <!-- partial:partials/_page_header -->
+            {{> pageheader }}   
+            <div class="col-md-8 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title mb-1">MATENIMEINTO DE DATOS</h4>                    
+                  <div>
                     <label class="form-label">DIMENCION</label>
                     <select class="form-control form-control" id="filtro">
                       <option>DIM_MUERTES_VIOLENTAS</option>  <!-- opciones de la cinta de filtros-->
@@ -53,316 +26,304 @@
                       <option>DIM_NATALIDAD_NAJ</option>
                       <option>DIM_FECHA</option>
                     </select>
-                      <div style="padding-top:40px"> 
-                    
-                    <button onclick="insertar()">Insertar</button> <button onclick="actualizar()">Actualizar</button><button onclick="borrar()">Borrar</button> 
-                   
-                      <div id="form1">
-
-                      </div>
-                                
-                                  
-                        
-                  </div>
+                    <div style="padding-top:40px"> 
+                      <button onclick="insertar()">Insertar</button>
+                      <button onclick="actualizar()">Actualizar</button>
+                      <button onclick="borrar()">Borrar</button> 
+                    </div> 
+                    <div id="form1">
+                    </div>
+                  </div>                             
                 </div>
               </div>
-            <!-- Figura 2-->
-            
-
-            
-             
-              
-            
-                       
+            </div>        
           </div>
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
-          
+          {{> footer }}
           <!-- partial -->
         </div>
-        {{> footer }}
         <!-- main-panel ends -->
       </div>
       <!-- page-body-wrapper ends -->
     </div>
+    <!-- container-scroller ends -->
 
-   
-<script>
-  var veces=1;
-function insertar(){
- const valor = document.getElementById('filtro');    /*SELECCIONAMOS LA CINTA DE OPCIONES POR SU ID FILTRO */
-const opcion = valor.options[valor.selectedIndex].text;  /*OBTENENMOS EL TEXTO DEPENDIENDO LA OPCION QUE ELIGA LA CINTA*/
-  
-  switch(opcion) { 
-  case "DIM_NATALIDAD":
-  if(veces==1){
-veces=veces-1;
-  
-  $(document).ready(function() {
-    
-$("div#form1").append(
-// Creating Form Div and Adding <h2> and <p> Paragraph Tag in it.
-$("<p/>").text("Inserte los datos para la dimension selccionada"), $("<form/>", {
-action: '#',
-method: '#'
-}).append(
-// Create <form> Tag and Appending in HTML Div form1.
-$("<input/>", {
-type: 'text',
-id: 'vaño',
-name: 'año',
-placeholder: 'Año'
-}), // Creating Input Element With Attribute.
-$("<input/>", {
-type: 'text',
-id: 'vtotal',
-name: 'total',
-placeholder: 'Total'
-}), $("<input/>", {
-type: 'text',
-id: 'vMasculinidad',
-name: 'Masculinidad',
-placeholder: 'Masculinidad'
-}),$("<input/>", {
-type: 'text',
-id: 'vmFemenina',
-name: 'Femenina',
-placeholder: 'Femenina'
-}), $("<br/>"), $("<input/>", {
-type: 'button',
-id: 'enviar',
-value: 'enviar'
-})))
-});
-}
-
-$(document).ready(function(){
-  $("#enviar").click(function(){
-    let anios = document.getElementById("vaño").value;
-    let total = document.getElementById("vtotal").value;
-    let masculina = document.getElementById("vMasculinidad").value;
-    let femenina = document.getElementById("vmFemenina").value;
-    $.post("http://localhost:3000/insertar",
-    {
-      anios: anios,
-      total: total,
-      masculina: masculina,
-      femenina: femenina
-    },
-    
-    function(data,status){
-      alert("Data: " + data + "\nStatus: " + status + "\nEnvio Correcto");
-    });
-  });
-});
-
-break;
-}
-
-} /// fin funcion tablita
-  
-  
-</script>
-
-<script>
- var veces=1;
-function actualizar(){
- const valor = document.getElementById('filtro');    /*SELECCIONAMOS LA CINTA DE OPCIONES POR SU ID FILTRO */
-const opcion = valor.options[valor.selectedIndex].text;  /*OBTENENMOS EL TEXTO DEPENDIENDO LA OPCION QUE ELIGA LA CINTA*/
-  
-  switch(opcion) { 
-  case "DIM_NATALIDAD":
-  if(veces==1){
-veces=veces-1;
-  
-  $(document).ready(function() {
-    
-$("div#form1").append(
-// Creating Form Div and Adding <h2> and <p> Paragraph Tag in it.
-$("<p/>").text("Inserte los datos para la actualizacion de la dimension selccionada"), $("<form/>", {
-action: '#',
-method: '#'
-}).append(
-// Create <form> Tag and Appending in HTML Div form1.
-$("<input/>", {
-type: 'text',
-id: 'vaño',
-name: 'año',
-placeholder: 'Año'
-}), // Creating Input Element With Attribute.
-$("<input/>", {
-type: 'text',
-id: 'vtotal',
-name: 'total',
-placeholder: 'Total'
-}), $("<input/>", {
-type: 'text',
-id: 'vMasculinidad',
-name: 'Masculinidad',
-placeholder: 'Masculinidad'
-}),$("<input/>", {
-type: 'text',
-id: 'vmFemenina',
-name: 'Femenina',
-placeholder: 'Femenina'
-}), $("<br/>"), $("<input/>", {
-type: 'button',
-id: 'actualizart',
-value: 'ActualizarTotal'
-}), $("<br/>"), $("<input/>", {
-type: 'button',
-id: 'actualizarf',
-value: 'ActualizarTasaF'
-})
-, $("<br/>"), $("<input/>", {
-type: 'button',
-id: 'actualizarm',
-value: 'ActualizarTasaM'
-})
-))
-});
-
-}
-
-$(document).ready(function(){
-  $("#actualizart").click(function(){
-    let anios = document.getElementById("vaño").value;
-    let total = document.getElementById("vtotal").value;
-    $.post("http://localhost:3000/actualizart",
-    {
-      anios: anios,
-      total: total
-    },
-    
-    function(data,status){
-      alert("Data: " + data + "\nStatus: " + status + "\nEnvio Correcto");
-    });
-  });
-});
-
-$(document).ready(function(){
-  $("#actualizarm").click(function(){
-    let anios = document.getElementById("vaño").value;
-    let masculina = document.getElementById("vMasculinidad").value;
-    $.post("http://localhost:3000/actualizarm",
-    {
-      anios: anios,
-      masculina: masculina
-    },
-    
-    function(data,status){
-      alert("Data: " + data + "\nStatus: " + status + "\nEnvio Correcto");
-    });
-  });
-});
-
-
-$(document).ready(function(){
-  $("#actualizarf").click(function(){
-    let anios = document.getElementById("vaño").value;
-    let femenina = document.getElementById("vmFemenina").value;
-    $.post("http://localhost:3000/actualizarf",
-    {
-      anios: anios,
-      femenina: femenina
-    },
-    
-    function(data,status){
-      alert("Data: " + data + "\nStatus: " + status + "\nEnvio Correcto");
-    });
-  });
-});
-
-break;
-}
-
-} 
-    
-
-</script>
-
-
-<script>
- var veces=1;
-function borrar(){
- const valor = document.getElementById('filtro');    /*SELECCIONAMOS LA CINTA DE OPCIONES POR SU ID FILTRO */
-const opcion = valor.options[valor.selectedIndex].text;  /*OBTENENMOS EL TEXTO DEPENDIENDO LA OPCION QUE ELIGA LA CINTA*/
-  
-  switch(opcion) { 
-  case "DIM_NATALIDAD":
-  if(veces==1){
-veces=veces-1;
-  
-  $(document).ready(function() {
-    
-$("div#form1").append(
-// Creating Form Div and Adding <h2> and <p> Paragraph Tag in it.
-$("<p/>").text("Inserte el dato comun para borrar la fila de la dimension selccionada"), $("<form/>", {
-action: '#',
-method: '#'
-}).append(
-// Create <form> Tag and Appending in HTML Div form1.
-$("<input/>", {
-type: 'text',
-id: 'vaño',
-name: 'año',
-placeholder: 'Año'
-}), $("<br/>"), $("<input/>", {
-type: 'button',
-id: 'borrar',
-value: 'BORRAR'
-})
-))
-});
-
-}
-
-$(document).ready(function(){
-  $("#borrar").click(function(){
-    let anios = document.getElementById("vaño").value;
-    $.post("http://localhost:3000/borrar",
-    {
-      anios: anios
-    },
-    
-    function(data,status){
-      alert("Data: " + data + "\nStatus: " + status + "\nEnvio Correcto");
-    });
-  });
-});
-
-
-break;
-}
-
-} 
-    
-
-</script>
-
-
- 
-
-
-
-
-    <!-- container-scroller -->
     <!-- plugins:js -->
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
+    <script type="text/javascript" src="assets/js/jquery-3.6.0.js"></script> 
+    <script type="text/javascript" src="assets/js/dom-to-image.js"></script>
+    <script type="text/javascript" src="assets/js/popper.min.js"></script>
+    <script type="text/javascript" src="assets/js/canvasjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
-    
     <script src="assets/vendors/owl-carousel-2/owl.carousel.min.js"></script>
-  
     <!-- End plugin js for this page -->
     <!-- inject:js -->
     <script src="assets/js/off-canvas.js"></script>
     <script src="assets/js/hoverable-collapse.js"></script>
-    
+    <script src="assets/js/settings.js"></script>
+    <script src="assets/js/misc.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page -->
+    {{!-- <script src="assets/js/app.js"></script> --}}
     <!-- End custom js for this page -->
-
+    <script>
+      var veces=1;
     
+    function insertar(){
+    const valor = document.getElementById('filtro');    /*SELECCIONAMOS LA CINTA DE OPCIONES POR SU ID FILTRO */
+    const opcion = valor.options[valor.selectedIndex].text;  /*OBTENENMOS EL TEXTO DEPENDIENDO LA OPCION QUE ELIGA LA CINTA*/
+      
+      switch(opcion) { 
+      case "DIM_NATALIDAD":
+      if(veces==1){
+        veces=veces-1;
+      
+      $(document).ready(function() {
+        
+    $("div#form1").append(
+    // Creating Form Div and Adding <h2> and <p> Paragraph Tag in it.
+    $("<p/>").text("Inserte los datos para la dimension selccionada"), $("<form/>", {
+    action: '#',
+    method: '#'
+    }).append(
+    // Create <form> Tag and Appending in HTML Div form1.
+    $("<input type='text' id='vaño' placeholder='Año'><br>", {
+    }), // Creating Input Element With Attribute.
+    $("<input type='text' id='vtotal' placeholder='Total'><br>", {
+    }), $("<input type='text' id='vMasculinidad' placeholder='Masculinidad'><br>", {
+    }),$("<input type='text' id='vmFemenina' placeholder='Femenina'>", {
+    }),$("<br><br><button class='btn btn-info' id='enviar'>Enviar</button>", {
+    })))
+    });
+    }
+    else{
+      alert("Por Favor Ingrese los datos en la forma actual , si desea cambiar de Metodo o Dimension Recargue la pagina");
+    }
+    break;
+    }
+    $(document).ready(function(){
+      $("#enviar").click(function(){
+        let anios = document.getElementById("vaño").value;
+      let total = document.getElementById("vtotal").value;
+      let masculina = document.getElementById("vMasculinidad").value;
+      let femenina = document.getElementById("vmFemenina").value;
+      var alerted = false;
+      var ExpRegSoloNumeros="^[0-9]+$";
+      var ExpRegNumDec=/^\d*\.\d+$/;
+        if(anios.match(ExpRegSoloNumeros)==null){
+          if (alerted === false){
+              alert("Ingrese Año en el formato , Ejemplo : 2020");
+              alerted = true;
+          }
+        }
+        if(total.match(ExpRegNumDec)==null || masculina.match(ExpRegNumDec)==null || femenina.match(ExpRegNumDec)==null){
+          if (alerted === false){
+              alert("Ingrese Numeros en el formato entero o decimal , Ejemplo : Decimal : 10.5 , 10.0");
+              alerted = true;
+          }
+        }
+        if(total.match(ExpRegNumDec)!=null && masculina.match(ExpRegNumDec)!=null && femenina.match(ExpRegNumDec)!=null && anios.match(ExpRegSoloNumeros)!=null){
+            $.post("http://localhost:3000/insertar",
+        {
+          anios: anios,
+          total: total,
+          masculina: masculina,
+          femenina: femenina
+        },
+        
+        function(data){
+          alert(data);
+          window.location.reload();
+        });
+        }
+        
+        
+        
+          
+      });
+    
+    });
+    } /// fin funcion insertar
+    </script>
 
+    <script>
+    function actualizar(){
+      const valor = document.getElementById('filtro');    /*SELECCIONAMOS LA CINTA DE OPCIONES POR SU ID FILTRO */
+      const opcion = valor.options[valor.selectedIndex].text;  /*OBTENENMOS EL TEXTO DEPENDIENDO LA OPCION QUE ELIGA LA CINTA*/
+      var valor1 ;    /*SELECCIONAMOS LA CINTA DE OPCIONES POR SU ID FILTRO */
+      var opcion1;
+      switch(opcion) { 
+      case "DIM_NATALIDAD":
+      if(veces==1){
+    veces=veces-1;
+      
+      $(document).ready(function() {
+        
+    $("div#form1").append(
+    // Creating Form Div and Adding <h2> and <p> Paragraph Tag in it.
+    $("<p/>").text("Inserte los datos para actualizar la dimensicion seleccionada"), $("<form/>", {
+    action: '#',
+    method: '#'
+    }).append(
+    // Create <form> Tag and Appending in HTML Div form1.
+    $("<select class='form-control form-control' id='act'><option>Totales</option><option>Tasa-Hombres</option><option>Tasa-Mujeres</option></select>", {
+    }),$("<br><br><button class='btn btn-info' id='seleccion'>Enviar</button>", {
+    }),$("<br><br><input type='text' id='vaño' placeholder='Año'><br>", {
+    }),$("<br><br><input type='text' id='vtotal' placeholder='Valor'><br>", {
+    })
+    ))
+    });
+    }
+    else{
+      alert("Por Favor Ingrese los datos en la forma actual , si desea cambiar de Metodo o Dimension Recargue la pagina");
+    }
+    break;
+    }
+      
+    $(document).ready(function(){
+      $("#seleccion").click(function(){
+        valor1 = document.getElementById('act');    /*SELECCIONAMOS LA CINTA DE OPCIONES POR SU ID FILTRO */
+        opcion1 = valor1.options[valor1.selectedIndex].text;
+        let anios = document.getElementById("vaño").value;
+        let total = document.getElementById("vtotal").value;
+        var variable;
+        var ExpRegSoloNumeros="^[0-9]+$";
+        var ExpRegNumDec=/^\d*\.\d+$/;
+      if(anios.match(ExpRegSoloNumeros)==null){
+        
+              alert("Ingrese Año en el formato , Ejemplo : 2020");
+        
+          
+        }
+        if(total.match(ExpRegNumDec)==null){
+        
+            alert("Ingrese Numeros en el formato entero o decimal , Ejemplo : Decimal : 10.5 , 10.0");
+            
+          
+        }
+      if(total.match(ExpRegNumDec)!=null && anios.match(ExpRegSoloNumeros)!=null){
+    
+          switch(opcion1){
+      case "Totales":
+        variable="total";
+        $.post("http://localhost:3000/actualizart",
+        {
+          anios: anios,
+          total: total,
+          variable: variable 
+        },
+        
+        function(data){
+        alert(data);
+          window.location.reload();
+        });
+      break;
+      case "Tasa-Hombres":
+        variable="masculina";
+        $.post("http://localhost:3000/actualizarm",
+        {
+          anios: anios,
+          total: total,
+          variable: variable 
+        },
+        
+        function(data){
+          alert(data);
+          window.location.reload();
+        });
+      break;
+      case "Tasa-Mujeres":
+          variable="femenina";
+        $.post("http://localhost:3000/actualizarf",
+        {
+          anios: anios,
+          total: total,
+          variable: variable 
+        },
+        
+        function(data){
+          alert(data);
+          window.location.reload();
+        });
+      break;
+      }
+    
+    
+    
+    
+    
+    
+      }
+      
+      });
+      
+    });
+    }
+    </script>
 
+    <script>
+    function borrar(){
+    const valor = document.getElementById('filtro');    /*SELECCIONAMOS LA CINTA DE OPCIONES POR SU ID FILTRO */
+    const opcion = valor.options[valor.selectedIndex].text;  /*OBTENENMOS EL TEXTO DEPENDIENDO LA OPCION QUE ELIGA LA CINTA*/
+      switch(opcion) { 
+      case "DIM_NATALIDAD":
+      if(veces==1){
+    veces=veces-1;
+      
+      $(document).ready(function() {
+        
+    $("div#form1").append(
+    // Creating Form Div and Adding <h2> and <p> Paragraph Tag in it.
+    $("<p/>").text("Inserte el dato comun para borrar la fila de la dimension selccionada"), $("<form/>", {
+    action: '#',
+    method: '#'
+    }).append(
+    // Create <form> Tag and Appending in HTML Div form1.
+    $("<input/>", {
+    type: 'text',
+    id: 'vaño',
+    name: 'año',
+    placeholder: 'Año'
+    }), $("<br/>"), $("<br><button class='btn btn-info' id='borrar'>Enviar</button>", {
+    })
+    ))
+    });
+    }
+    else{
+      alert("Por Favor Ingrese los datos en la forma actual , si desea cambiar de Metodo o Dimension Recargue la pagina");
+    }
+    break;
+    }
+      $(document).ready(function(){
+      $("#borrar").click(function(){
+        var ExpRegSoloNumeros="^[0-9]+$";
+        var ExpRegNumDec=/^\d*\.\d+$/;
+        let anios = document.getElementById("vaño").value;
+        if(anios.match(ExpRegSoloNumeros)==null){
+        
+              alert("Ingrese Año en el formato , Ejemplo : 2020");
+            
+          
+        }
+        else{
+          $.post("http://localhost:3000/borrar",
+        {
+          anios: anios
+        },
+        
+        function(data){
+          alert(data);
+          window.location.reload();
+        });
+        }
+        
+      
+      });
+    });
+    } 
+    </script>
   </body>
 </html>

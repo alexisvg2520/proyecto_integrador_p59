@@ -1,20 +1,10 @@
+/* const & var */
 const express = require('express');
 const app = express();
 const hbs = require('hbs');
 var bodyParser = require('body-parser')
-
-require('./hbs/helpers');
-
-const port = process.env.PORT || 3000;
-
-app.use(express.static(__dirname + '/public'));
-app.use(bodyParser.json())
-app.use(
-    bodyParser.urlencoded({
-        extended: true,
-    })
-)
 const { Pool } = require('pg')
+const port = process.env.PORT || 3000;
 const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
@@ -23,6 +13,17 @@ const pool = new Pool({
     port: 5432,
 })
 
+/* requires */
+require('./hbs/helpers');
+
+/* Use */
+app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.json())
+app.use(
+    bodyParser.urlencoded({
+        extended: true,
+    })
+)
 
 app.post('/actualizarm', (req, res) => {
     const { anios, masculina } = req.body;
@@ -155,11 +156,8 @@ app.get('/opcion3', function(request, response) {
     });
 });
 
-
-
-
-
-hbs.registerPartials(__dirname + '/views/parciales');
+/* handlebars hbs */
+hbs.registerPartials(__dirname + '/views/partials', function (err) {});
 app.set('view engine', 'hbs'); //rendiriza la vista 
 
 app.get('/dashboard', (req, res) => {
