@@ -63,5 +63,28 @@
     <script src="assets/js/off-canvas.js"></script>
     <script src="assets/js/hoverable-collapse.js"></script>
     <!-- endinject -->
+
+    <script>
+      var x=3;  
+
+      function myFunction() {
+          if(document.getElementById('inputPassword').value=='1234' && document.getElementById('inputEmail').value=='milton'){
+              location.replace("/dashboard")
+
+          }
+          else{
+              
+              if(x==0){
+                  document.getElementById('times').innerHTML="No hay mas intentos , Recarge la pagina para volver a intentarlo";
+                  
+                  }
+                  else{
+                  document.getElementById('times').innerHTML="Numero de Intento "+x;
+                  x=x-1;    
+                  }
+              
+          }
+      }
+    </script>
   </body>
 </html>
