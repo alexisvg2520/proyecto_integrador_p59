@@ -24,66 +24,71 @@ const pool = new Pool({
 })
 
 
-app.post('/actualizarm', (req, res) => {
-    const { anios, masculina } = req.body;
 
-    pool.query(`UPDATE tasanatalidad SET masculina = $2 WHERE años = $1`, [anios, masculina], (error, results) => {
-        if (error) {
-            throw error
-        }
-
-    })
-
-    res.send({
-        anios,
-        masculina,
-    });
-});
-
-app.post('/actualizarf', (req, res) => {
-    const { anios, femenina } = req.body;
-
-    pool.query(`UPDATE tasanatalidad SET femenina = $2 WHERE años = $1`, [anios, femenina], (error, results) => {
-        if (error) {
-            throw error
-        }
-
-    })
-
-    res.send({
-        anios,
-        femenina,
-    });
-});
 
 app.post('/actualizart', (req, res) => {
     const { anios, total } = req.body;
 
     pool.query(`UPDATE tasanatalidad SET total = $2 WHERE años = $1`, [anios, total], (error, results) => {
         if (error) {
-            throw error
+            res.send("Error No se puede obtener Conexion Con base de datos")
+        } else {
+            res.send("Datos Enviados")
         }
 
     })
 
-    res.send({
-        anios,
-        total,
-    });
+
 });
+
+
+app.post('/actualizarm', (req, res) => {
+    const { anios, total } = req.body;
+
+    pool.query(`UPDATE tasanatalidad SET masculina = $2 WHERE años = $1`, [anios, total], (error, results) => {
+        if (error) {
+            res.send("Error No se puede obtener Conexion Con base de datos")
+        } else {
+            res.send("Datos Enviados")
+        }
+
+    })
+
+
+});
+
+app.post('/actualizarf', (req, res) => {
+    const { anios, total } = req.body;
+
+    pool.query(`UPDATE tasanatalidad SET femenina = $2 WHERE años = $1`, [anios, total], (error, results) => {
+        if (error) {
+            res.send("Error No se puede obtener Conexion Con base de datos")
+        } else {
+            res.send("Datos Enviados")
+        }
+
+    })
+
+
+});
+
+
+
+
+
 
 app.post('/borrar', (req, res) => {
     const { anios } = req.body;
 
     pool.query(`DELETE FROM tasanatalidad WHERE años = $1`, [anios], (error, results) => {
         if (error) {
-            throw error
+            res.send("Error No se puede obtener Conexion Con base de datos")
+        } else {
+            res.send("Datos Enviados")
         }
 
     })
-    res.send({
-        anios,
-    });
+
 });
 
 
@@ -94,17 +99,14 @@ app.post('/insertar', (req, res) => {
 
     pool.query('INSERT INTO tasanatalidad (años, total, masculina, femenina) VALUES ($1, $2, $3, $4)', [anios, total, masculina, femenina], (error, results) => {
         if (error) {
-            throw error
+            res.send("Error No se puede obtener Conexion Con base de datos")
+        } else {
+            res.send("Datos Enviados")
         }
 
     })
 
-    res.send({
-        anios,
-        total,
-        masculina,
-        femenina,
-    });
+
 });
 
 
@@ -114,19 +116,20 @@ app.post('/insertar', (req, res) => {
 app.get('/default', function(request, response) {
     console.log('GET request received at /')
     pool.query('select * from tasanatalidad', function(err, result) { // consulta de base de datos a postgres
-        if (err) throw err;
-        else {
+        if (err) {
+            response.send("error")
+        } else {
             response.send(result.rows) // se manda el JSON
         }
-
     });
 });
 
 app.get('/opcion1', function(request, response) {
     console.log('GET request received at /')
     pool.query('select años,masculina from tasanatalidad', function(err, result) { // consulta de base de datos a postgres
-        if (err) throw err;
-        else {
+        if (err) {
+            response.send("error")
+        } else {
             response.send(result.rows) // se manda el JSON
         }
 
@@ -136,8 +139,9 @@ app.get('/opcion1', function(request, response) {
 app.get('/opcion2', function(request, response) {
     console.log('GET request received at /')
     pool.query('select años,femenina from tasanatalidad', function(err, result) { // consulta de base de datos a postgres
-        if (err) throw err;
-        else {
+        if (err) {
+            response.send("error")
+        } else {
             response.send(result.rows) // se manda el JSON
         }
 
@@ -147,8 +151,9 @@ app.get('/opcion2', function(request, response) {
 app.get('/opcion3', function(request, response) {
     console.log('GET request received at /')
     pool.query('select años,total from tasanatalidad', function(err, result) { // consulta de base de datos a postgres
-        if (err) throw err;
-        else {
+        if (err) {
+            response.send("error")
+        } else {
             response.send(result.rows) // se manda el JSON
         }
 
@@ -191,6 +196,9 @@ app.get('/mantenimiento', (req, res) => {
         tipo: "Administrador"
     });
 });
+
+
+
 
 
 app.listen(port, () => {

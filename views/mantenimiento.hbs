@@ -55,9 +55,12 @@
                     </select>
                       <div style="padding-top:40px"> 
                     
-                    <button onclick="insertar()">Insertar</button> <button onclick="actualizar()">Actualizar</button><button onclick="borrar()">Borrar</button> 
-                   
-                      <div id="form1">
+                    <button class="btn btn-dark" onclick="insertar()">Insertar</button>&nbsp;<button class="btn btn-dark" onclick="actualizar()">Actualizar</button>&nbsp;<button class="btn btn-dark" onclick="borrar()">Borrar</button> 
+                     
+                      
+                      <br>
+                      <br>
+                      <div id="form1" class="form-group">
 
                       </div>
                                 
@@ -89,6 +92,7 @@
    
 <script>
   var veces=1;
+ 
 function insertar(){
  const valor = document.getElementById('filtro');    /*SELECCIONAMOS LA CINTA DE OPCIONES POR SU ID FILTRO */
 const opcion = valor.options[valor.selectedIndex].text;  /*OBTENENMOS EL TEXTO DEPENDIENDO LA OPCION QUE ELIGA LA CINTA*/
@@ -107,42 +111,51 @@ action: '#',
 method: '#'
 }).append(
 // Create <form> Tag and Appending in HTML Div form1.
-$("<input/>", {
-type: 'text',
-id: 'vaño',
-name: 'año',
-placeholder: 'Año'
+$("<input type='text' id='vaño' placeholder='Año'><br>", {
+
 }), // Creating Input Element With Attribute.
-$("<input/>", {
-type: 'text',
-id: 'vtotal',
-name: 'total',
-placeholder: 'Total'
-}), $("<input/>", {
-type: 'text',
-id: 'vMasculinidad',
-name: 'Masculinidad',
-placeholder: 'Masculinidad'
-}),$("<input/>", {
-type: 'text',
-id: 'vmFemenina',
-name: 'Femenina',
-placeholder: 'Femenina'
-}), $("<br/>"), $("<input/>", {
-type: 'button',
-id: 'enviar',
-value: 'enviar'
+$("<input type='text' id='vtotal' placeholder='Total'><br>", {
+
+}), $("<input type='text' id='vMasculinidad' placeholder='Masculinidad'><br>", {
+
+}),$("<input type='text' id='vmFemenina' placeholder='Femenina'>", {
+
+}),$("<br><br><button class='btn btn-info' id='enviar'>Enviar</button>", {
 })))
 });
 }
+else{
+  alert("Por Favor Ingrese los datos en la forma actual , si desea cambiar de Metodo o Dimension Recargue la pagina");
+}
+break;
+}
 
-$(document).ready(function(){
+ $(document).ready(function(){
   $("#enviar").click(function(){
     let anios = document.getElementById("vaño").value;
-    let total = document.getElementById("vtotal").value;
-    let masculina = document.getElementById("vMasculinidad").value;
-    let femenina = document.getElementById("vmFemenina").value;
-    $.post("http://localhost:3000/insertar",
+  let total = document.getElementById("vtotal").value;
+  let masculina = document.getElementById("vMasculinidad").value;
+  let femenina = document.getElementById("vmFemenina").value;
+  var alerted = false;
+  var ExpRegSoloNumeros="^[0-9]+$";
+  var ExpRegNumDec=/^\d*\.\d+$/;
+
+    if(anios.match(ExpRegSoloNumeros)==null){
+       if (alerted === false){
+          alert("Ingrese Año en el formato , Ejemplo : 2020");
+          alerted = true;
+       }
+    }
+
+    if(total.match(ExpRegNumDec)==null || masculina.match(ExpRegNumDec)==null || femenina.match(ExpRegNumDec)==null){
+       if (alerted === false){
+          alert("Ingrese Numeros en el formato entero o decimal , Ejemplo : Decimal : 10.5 , 10.0");
+          alerted = true;
+       }
+    }
+
+     if(total.match(ExpRegNumDec)!=null && masculina.match(ExpRegNumDec)!=null && femenina.match(ExpRegNumDec)!=null && anios.match(ExpRegSoloNumeros)!=null){
+        $.post("http://localhost:3000/insertar",
     {
       anios: anios,
       total: total,
@@ -150,26 +163,31 @@ $(document).ready(function(){
       femenina: femenina
     },
     
-    function(data,status){
-      alert("Data: " + data + "\nStatus: " + status + "\nEnvio Correcto");
+    function(data){
+      alert(data);
+      window.location.reload();
     });
+    }
+    
+    
+
+    
+       
   });
+ 
+
 });
 
-break;
-}
+} /// fin funcion insertar
 
-} /// fin funcion tablita
-  
-  
 </script>
 
 <script>
- var veces=1;
 function actualizar(){
- const valor = document.getElementById('filtro');    /*SELECCIONAMOS LA CINTA DE OPCIONES POR SU ID FILTRO */
-const opcion = valor.options[valor.selectedIndex].text;  /*OBTENENMOS EL TEXTO DEPENDIENDO LA OPCION QUE ELIGA LA CINTA*/
-  
+  const valor = document.getElementById('filtro');    /*SELECCIONAMOS LA CINTA DE OPCIONES POR SU ID FILTRO */
+  const opcion = valor.options[valor.selectedIndex].text;  /*OBTENENMOS EL TEXTO DEPENDIENDO LA OPCION QUE ELIGA LA CINTA*/
+  var valor1 ;    /*SELECCIONAMOS LA CINTA DE OPCIONES POR SU ID FILTRO */
+  var opcion1;
   switch(opcion) { 
   case "DIM_NATALIDAD":
   if(veces==1){
@@ -179,115 +197,127 @@ veces=veces-1;
     
 $("div#form1").append(
 // Creating Form Div and Adding <h2> and <p> Paragraph Tag in it.
-$("<p/>").text("Inserte los datos para la actualizacion de la dimension selccionada"), $("<form/>", {
+$("<p/>").text("Inserte los datos para actualizar la dimensicion seleccionada"), $("<form/>", {
 action: '#',
 method: '#'
 }).append(
 // Create <form> Tag and Appending in HTML Div form1.
-$("<input/>", {
-type: 'text',
-id: 'vaño',
-name: 'año',
-placeholder: 'Año'
-}), // Creating Input Element With Attribute.
-$("<input/>", {
-type: 'text',
-id: 'vtotal',
-name: 'total',
-placeholder: 'Total'
-}), $("<input/>", {
-type: 'text',
-id: 'vMasculinidad',
-name: 'Masculinidad',
-placeholder: 'Masculinidad'
-}),$("<input/>", {
-type: 'text',
-id: 'vmFemenina',
-name: 'Femenina',
-placeholder: 'Femenina'
-}), $("<br/>"), $("<input/>", {
-type: 'button',
-id: 'actualizart',
-value: 'ActualizarTotal'
-}), $("<br/>"), $("<input/>", {
-type: 'button',
-id: 'actualizarf',
-value: 'ActualizarTasaF'
+$("<select class='form-control form-control' id='act'><option>Totales</option><option>Tasa-Hombres</option><option>Tasa-Mujeres</option></select>", {
+
+}),$("<br><br><button class='btn btn-info' id='seleccion'>Enviar</button>", {
+}),$("<br><br><input type='text' id='vaño' placeholder='Año'><br>", {
+}),$("<br><br><input type='text' id='vtotal' placeholder='Valor'><br>", {
 })
-, $("<br/>"), $("<input/>", {
-type: 'button',
-id: 'actualizarm',
-value: 'ActualizarTasaM'
-})
+
 ))
 });
 
 }
-
+else{
+  alert("Por Favor Ingrese los datos en la forma actual , si desea cambiar de Metodo o Dimension Recargue la pagina");
+}
+break;
+}
+   
 $(document).ready(function(){
-  $("#actualizart").click(function(){
+  $("#seleccion").click(function(){
+    valor1 = document.getElementById('act');    /*SELECCIONAMOS LA CINTA DE OPCIONES POR SU ID FILTRO */
+    opcion1 = valor1.options[valor1.selectedIndex].text;
     let anios = document.getElementById("vaño").value;
     let total = document.getElementById("vtotal").value;
+    var variable;
+    var ExpRegSoloNumeros="^[0-9]+$";
+    var ExpRegNumDec=/^\d*\.\d+$/;
+  if(anios.match(ExpRegSoloNumeros)==null){
+     
+          alert("Ingrese Año en el formato , Ejemplo : 2020");
+     
+       
+    }
+
+    if(total.match(ExpRegNumDec)==null){
+     
+         alert("Ingrese Numeros en el formato entero o decimal , Ejemplo : Decimal : 10.5 , 10.0");
+        
+       
+    }
+
+  if(total.match(ExpRegNumDec)!=null && anios.match(ExpRegSoloNumeros)!=null){
+
+ 
+      switch(opcion1){
+  case "Totales":
+    variable="total";
     $.post("http://localhost:3000/actualizart",
     {
       anios: anios,
-      total: total
+      total: total,
+      variable: variable 
     },
     
-    function(data,status){
-      alert("Data: " + data + "\nStatus: " + status + "\nEnvio Correcto");
+    function(data){
+     alert(data);
+      window.location.reload();
     });
-  });
-});
 
-$(document).ready(function(){
-  $("#actualizarm").click(function(){
-    let anios = document.getElementById("vaño").value;
-    let masculina = document.getElementById("vMasculinidad").value;
+  break;
+  case "Tasa-Hombres":
+
+    variable="masculina";
     $.post("http://localhost:3000/actualizarm",
     {
       anios: anios,
-      masculina: masculina
+      total: total,
+      variable: variable 
     },
     
-    function(data,status){
-      alert("Data: " + data + "\nStatus: " + status + "\nEnvio Correcto");
+    function(data){
+      alert(data);
+      window.location.reload();
     });
-  });
-});
 
+  break;
+  case "Tasa-Mujeres":
 
-$(document).ready(function(){
-  $("#actualizarf").click(function(){
-    let anios = document.getElementById("vaño").value;
-    let femenina = document.getElementById("vmFemenina").value;
+      variable="femenina";
     $.post("http://localhost:3000/actualizarf",
     {
       anios: anios,
-      femenina: femenina
+      total: total,
+      variable: variable 
     },
     
-    function(data,status){
-      alert("Data: " + data + "\nStatus: " + status + "\nEnvio Correcto");
+    function(data){
+      alert(data);
+      window.location.reload();
     });
+
+  break;
+  }
+ 
+ 
+ 
+ 
+ 
+ 
+  }
+
+
+  
+
+
   });
+  
 });
 
-break;
 }
-
-} 
-    
 
 </script>
 
-
 <script>
- var veces=1;
 function borrar(){
- const valor = document.getElementById('filtro');    /*SELECCIONAMOS LA CINTA DE OPCIONES POR SU ID FILTRO */
+const valor = document.getElementById('filtro');    /*SELECCIONAMOS LA CINTA DE OPCIONES POR SU ID FILTRO */
 const opcion = valor.options[valor.selectedIndex].text;  /*OBTENENMOS EL TEXTO DEPENDIENDO LA OPCION QUE ELIGA LA CINTA*/
-  
   switch(opcion) { 
   case "DIM_NATALIDAD":
   if(veces==1){
@@ -307,37 +337,49 @@ type: 'text',
 id: 'vaño',
 name: 'año',
 placeholder: 'Año'
-}), $("<br/>"), $("<input/>", {
-type: 'button',
-id: 'borrar',
-value: 'BORRAR'
+}), $("<br/>"), $("<br><button class='btn btn-info' id='borrar'>Enviar</button>", {
+
 })
 ))
 });
 
 }
+else{
+  alert("Por Favor Ingrese los datos en la forma actual , si desea cambiar de Metodo o Dimension Recargue la pagina");
+}
+break;
+}
 
-$(document).ready(function(){
+  $(document).ready(function(){
   $("#borrar").click(function(){
+    var ExpRegSoloNumeros="^[0-9]+$";
+    var ExpRegNumDec=/^\d*\.\d+$/;
     let anios = document.getElementById("vaño").value;
-    $.post("http://localhost:3000/borrar",
+    if(anios.match(ExpRegSoloNumeros)==null){
+     
+          alert("Ingrese Año en el formato , Ejemplo : 2020");
+        
+       
+    }
+    else{
+
+      $.post("http://localhost:3000/borrar",
     {
       anios: anios
     },
     
-    function(data,status){
-      alert("Data: " + data + "\nStatus: " + status + "\nEnvio Correcto");
+    function(data){
+      alert(data);
+      window.location.reload();
     });
+
+    }
+    
+  
   });
 });
 
-
-break;
-}
-
 } 
-    
-
 </script>
 
 

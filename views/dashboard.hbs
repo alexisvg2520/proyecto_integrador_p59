@@ -28,9 +28,15 @@
 			$.ajax('http://localhost:3000/default',   // request url
 			{            
 				success: function (data, status, xhr) {    // success callback function
-
-           convertJsontoHtmlTable(data);   //  llamada ala funcion que transforma el JSON a tabla
+          if(data=="error"){
+            alert("Error no se pudo concretar la conexion con la base de datos");
+          }
+          else{
+              convertJsontoHtmlTable(data);
+          }
+              //  llamada ala funcion que transforma el JSON a tabla
 				}
+
 			});
         });
         /*se llama ala funcion al cargar la pagina*/
@@ -217,7 +223,12 @@ function addData(data) {
 			{            
 				success: function (data, status, xhr) {    // success callback function
 
-           convertJsontoHtmlTable(data);   //  llamada ala funcion que transforma el JSON a tabla
+           if(data=="error"){
+            alert("Error no se pudo concretar la conexion con la base de datos");
+          }
+          else{
+              convertJsontoHtmlTable(data);
+          }   //  llamada ala funcion que transforma el JSON a tabla
 				}
 			});
         });
@@ -273,7 +284,7 @@ function addData(data) {
                      
                      
                       
-                      <button onclick="cargarnuevatabla()">Generar Tabla</button><button onclick="generaractual()">Generar Tabla Inicial</button>
+                      <button class="btn btn-success" onclick="cargarnuevatabla()">Generar Tabla</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-success" onclick="generaractual()">Generar Tabla Inicial</button>
                   
                       
                       
@@ -343,7 +354,12 @@ const valor = document.getElementById('filtro');    /*SELECCIONAMOS LA CINTA DE 
 			{            
 				success: function (data, status, xhr) {    // success callback function
 
-           convertJsontoHtmlTable(data); 
+           if(data=="error"){
+            alert("Error no se pudo concretar la conexion con la base de datos");
+          }
+          else{
+              convertJsontoHtmlTable(data);
+          }
            var datos = [];
 var chart = new CanvasJS.Chart("Grafico", {
 	animationEnabled: true,
@@ -387,7 +403,12 @@ function addData(data) {
 			{            
 				success: function (data, status, xhr) {    // success callback function
 
-           convertJsontoHtmlTable(data);
+           if(data=="error"){
+            alert("Error no se pudo concretar la conexion con la base de datos");
+          }
+          else{
+              convertJsontoHtmlTable(data);
+          }
            var datos = [];
 var chart = new CanvasJS.Chart("Grafico", {
 	animationEnabled: true,
@@ -431,7 +452,12 @@ function addData(data) {
 			{            
 				success: function (data, status, xhr) {    // success callback function
           
-           convertJsontoHtmlTable(data);   //  llamada ala funcion que transforma el JSON a tabla
+          if(data=="error"){
+            alert("Error no se pudo concretar la conexion con la base de datos");
+          }
+          else{
+              convertJsontoHtmlTable(data);
+          }   //  llamada ala funcion que transforma el JSON a tabla
           
           var datos = [];
 var chart = new CanvasJS.Chart("Grafico", {
