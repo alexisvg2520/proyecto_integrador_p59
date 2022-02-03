@@ -121,7 +121,12 @@
             {            
               success: function (data, status, xhr) {    // success callback function
 
-                convertJsontoHtmlTable(data); 
+                if(data=="error"){
+            alert("Error no se pudo concretar la conexion con la base de datos");
+          }
+          else{
+              convertJsontoHtmlTable(data);
+          }
                 var datos = [];
                 var chart = new CanvasJS.Chart("Grafico", {
                   animationEnabled: true,
@@ -161,7 +166,12 @@
             $.ajax(url,   // request url
             {            
               success: function (data, status, xhr) {    // success callback function
-                convertJsontoHtmlTable(data);
+                if(data=="error"){
+            alert("Error no se pudo concretar la conexion con la base de datos");
+          }
+          else{
+              convertJsontoHtmlTable(data);
+          }
                 var datos = [];
                 var chart = new CanvasJS.Chart("Grafico", {
                   animationEnabled: true,
@@ -205,7 +215,12 @@
           {            
             success: function (data, status, xhr) {    // success callback function
               
-              convertJsontoHtmlTable(data);   //  llamada ala funcion que transforma el JSON a tabla
+              if(data=="error"){
+            alert("Error no se pudo concretar la conexion con la base de datos");
+          }
+          else{
+              convertJsontoHtmlTable(data);
+          }   //  llamada ala funcion que transforma el JSON a tabla //  llamada ala funcion que transforma el JSON a tabla
               
               var datos = [];
     var chart = new CanvasJS.Chart("Grafico", {
