@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="es">
+  {{> header }}
+  <body>
+
+    <script type="text/javascript" src="assets/js/jquery-3.6.0.js">/*Jquery script */</script>  
+
+  
+
+    
+
+    <script type="text/javascript" src="assets/js/dom-to-image.js"> /*dom to image script */</script>
+
+    
+    <script type="text/javascript" src="assets/js/popper.min.js">/*POPPER LIBRERIA */</script>
+
+    
+    
+<script src="assets/js/canvasjs.min.js"></script>
+
+ 
+
+
+    <script>
+        /* Cargar la tabla al incio llamada a metodo get nodejs */
+        
+        $(document).ready(function () {
+			$.ajax('http://localhost:3000/default',   // request url
+			{            
+				success: function (data, status, xhr) {    // success callback function
+          if(data=="error"){
+            alert("Error no se pudo concretar la conexion con la base de datos");
+          }
+          else{
+              convertJsontoHtmlTable(data);
+          }
+              //  llamada ala funcion que transforma el JSON a tabla
+				}
+
+			});
+
+      $.ajax('http://localhost:3000/default1',   // request url
+			{            
+				success: function (data, status, xhr) {    // success callback function
+          if(data=="error"){
+            alert("Error no se pudo concretar la conexion con la base de datos");
+          }
+          else{
+              convertJsontoHtmlTable1(data);
+          }
+              //  llamada ala funcion que transforma el JSON a tabla
+				}
+
+			});
+
+
+        });
+        /*se llama ala funcion al cargar la pagina*/
+        /*FIN SCRIPT TABLA AL INICIO*/
+    </script>
+
+
+<script>
+
+ function convertJsontoHtmlTable(data)       // funcion que convierte JSON en tabla
+    {
+
+        //Getting value for table header
+        // {'EmployeeID', 'EmployeeName', 'Address' , 'City','Country'}
+        var tablecolumns = [];
+        for (var i = 0; i < data.length; i++) {
+            for (var key in data[i]) {
+                if (tablecolumns.indexOf(key) === -1) {
+                    tablecolumns.push(key);
+                }
+            }
+        }
+
+        //Creating html table and adding class to it
+        var tableemployee = document.createElement("table");
+        tableemployee.classList.add("table");
+        tableemployee.classList.add("table-striped");
+        tableemployee.classList.add("table-bordered");
+        tableemployee.classList.add("table-dark");
+        tableemployee.classList.add("table-responsive");
+        //Creating header of the HTML table using
+        //tr
+        var tr = tableemployee.insertRow(-1);
+
+        for (var i = 0; i < tablecolumns.length; i++) {
+            //header
+            var th = document.createElement("th");
+            th.innerHTML = tablecolumns[i];
+            tr.appendChild(th);
+        }
+
+        // Add employee JSON data in table as tr or rows
+        for (var i = 0; i < data.length; i++) {
+            tr = tableemployee.insertRow(-1);
+            for (var j = 0; j < tablecolumns.length; j++) {
+                var tabCell = tr.insertCell(-1);
+                tabCell.innerHTML = data[i][tablecolumns[j]];
+            }
+        }
+
+        //Final step , append html table to the container div
+        var employeedivcontainer = document.getElementById("tabledata");
+        employeedivcontainer.innerHTML = "";
+        employeedivcontainer.appendChild(tableemployee);
+    }
+
+
+</script>
+
+
+<script>
+
+ function convertJsontoHtmlTable1(data)       // funcion que convierte JSON en tabla
+    {
+
+        //Getting value for table header
+        // {'EmployeeID', 'EmployeeName', 'Address' , 'City','Country'}
+        var tablecolumns = [];
+        for (var i = 0; i < data.length; i++) {
+            for (var key in data[i]) {
+                if (tablecolumns.indexOf(key) === -1) {
+                    tablecolumns.push(key);
+                }
+            }
+        }
+
+        //Creating html table and adding class to it
+        var tableemployee = document.createElement("table");
+        tableemployee.classList.add("table");
+        tableemployee.classList.add("table-striped");
+        tableemployee.classList.add("table-bordered");
+        tableemployee.classList.add("table-dark");
+        tableemployee.classList.add("table-responsive");
+        //Creating header of the HTML table using
+        //tr
+        var tr = tableemployee.insertRow(-1);
+
+        for (var i = 0; i < tablecolumns.length; i++) {
+            //header
+            var th = document.createElement("th");
+            th.innerHTML = tablecolumns[i];
+            tr.appendChild(th);
+        }
+
+        // Add employee JSON data in table as tr or rows
+        for (var i = 0; i < data.length; i++) {
+            tr = tableemployee.insertRow(-1);
+            for (var j = 0; j < tablecolumns.length; j++) {
+                var tabCell = tr.insertCell(-1);
+                tabCell.innerHTML = data[i][tablecolumns[j]];
+            }
+        }
+
+        //Final step , append html table to the container div
+        var employeedivcontainer = document.getElementById("tabledata1");
+        employeedivcontainer.innerHTML = "";
+        employeedivcontainer.appendChild(tableemployee);
+    }
+
+
+</script>
+
+
+
+
+
+
+
+
+<script>
+  window.onload = function () {
+
+  var datos = [];
+  var datos1 = [];
+  var datos2 = [];
+  var chart = new CanvasJS.Chart("Grafico", {
+    animationEnabled: true,
+    theme: "dark2",
+    title: {
+      text: ""
+    },
+    axisY: {
+      title: "Tasa Total Hombre Mujeres",
+      titleFontSize: 24,
+      includeZero: true
+    },
+    axisX:{
+              valueFormatString: "#"
+    },
+    data: [{
+      type: "column",
+      yValueFormatString: "#,###.## %",
+      xValueFormatString: "#",
+      dataPoints: datos
+    },
+    {
+      type: "column",
+      yValueFormatString: "#,###.## %",
+      xValueFormatString: "#",
+      dataPoints: datos1
+    },
+    {
+      type: "column",
+      yValueFormatString: "#,###.## %",
+      xValueFormatString: "#",
+      dataPoints: datos2
+    
+    }]
+  });
+  $.getJSON("http://localhost:3000/default", addData);
+  function addData(data) {
+    for (var i = 0; i < data.length; i++) {
+      datos.push({
+        x: parseInt(data[i].Año),
+        y: parseFloat(data[i].total_natalidad/100)
+        
+      });
+        datos1.push({
+        x: parseInt(data[i].Año),
+        y: parseFloat(data[i].total_hombres_natalidad/100)
+        
+      });
+      datos2.push({
+        x: parseInt(data[i].Año),
+        y: parseFloat(data[i].total_mujeres_natalidad/100)
+        
+      });
+    }
+
+    
+    chart.render();
+
+  }
+
+     var datos3 = [];
+  var datos4 = [];
+  var datos5 = [];
+  var chart1 = new CanvasJS.Chart("Grafico1", {
+    animationEnabled: true,
+    theme: "dark2",
+    title: {
+      text: ""
+    },
+    axisY: {
+      title: "Tasa Total Hombre Mujeres Muertes Accidentales",
+      titleFontSize: 24,
+      includeZero: true
+    },
+    axisX:{
+              valueFormatString: "#"
+    },
+    data: [{
+      type: "spline",
+      yValueFormatString: "#,###.## %",
+      xValueFormatString: "#",
+      dataPoints: datos3
+    },
+    {
+      type: "spline",
+      yValueFormatString: "#,###.## %",
+      xValueFormatString: "#",
+      dataPoints: datos4
+    },
+    {
+      type: "spline",
+      yValueFormatString: "#,###.## %",
+      xValueFormatString: "#",
+      dataPoints: datos5
+    
+    }]
+  });
+  $.getJSON("http://localhost:3000/default1", addData1);
+  function addData1(data) {
+    for (var i = 0; i < data.length; i++) {
+      datos3.push({
+        x: parseInt(data[i].Año),
+        y: parseFloat(data[i].total_muertes_accidente)
+        
+      });
+        datos4.push({
+        x: parseInt(data[i].Año),
+        y: parseFloat(data[i].total_hombres_accidente)
+        
+      });
+      datos5.push({
+        x: parseInt(data[i].Año),
+        y: parseFloat(data[i].total_mujeres_accidente)
+        
+      });
+    }
+
+    
+    chart1.render();
+
+  }
+
+
+
+  }
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <script>
+  function generaractual() {
+
+  var datos = [];
+  var datos1 = [];
+  var datos2 = [];
+  var chart = new CanvasJS.Chart("Grafico", {
+    animationEnabled: true,
+    theme: "dark2",
+    title: {
+      text: ""
+    },
+    axisY: {
+      title: "Tasa Total Hombre Mujeres",
+      titleFontSize: 24,
+      includeZero: true
+    },
+    axisX:{
+              valueFormatString: "#"
+    },
+    data: [{
+      type: "column",
+      yValueFormatString: "#,###.## %",
+       xValueFormatString: "#",
+      dataPoints: datos
+    },
+    {
+      type: "column",
+      yValueFormatString: "#,###.## %",
+       xValueFormatString: "#",
+      dataPoints: datos1
+    },
+    {
+      type: "column",
+      yValueFormatString: "#,###.## %",
+      xValueFormatString: "#",
+      dataPoints: datos2
+    
+    }]
+  });
+  $.getJSON("http://localhost:3000/default", addData);
+  function addData(data) {
+    for (var i = 0; i < data.length; i++) {
+      datos.push({
+        x: parseInt(data[i].Año),
+        y: parseFloat(data[i].total_natalidad/100)
+        
+      });
+        datos1.push({
+        x: parseInt(data[i].Año),
+        y: parseFloat(data[i].total_hombres_natalidad/100)
+        
+      });
+      datos2.push({
+        x: parseInt(data[i].Año),
+        y: parseFloat(data[i].total_mujeres_natalidad/100)
+        
+      });
+    }
+
+    
+    chart.render();
+
+  }
+
+
+  
+
+    $(document).ready(function () {
+        $.ajax('http://localhost:3000/default',   // request url
+        {            
+          success: function (data, status, xhr) {    // success callback function
+
+            convertJsontoHtmlTable(data);   //  llamada ala funcion que transforma el JSON a tabla
+          }
+        });
+          });
+
+  }
+  </script>
+
+
+
+<script>
+  function generaractual1() {
+
+   var datos3 = [];
+  var datos4 = [];
+  var datos5 = [];
+  var chart1 = new CanvasJS.Chart("Grafico1", {
+    animationEnabled: true,
+    theme: "dark2",
+    title: {
+      text: ""
+    },
+    axisY: {
+      title: "Tasa Total Hombre Mujeres Muertes Accidentales",
+      titleFontSize: 24,
+      includeZero: true
+    },
+    axisX:{
+              valueFormatString: "#"
+    },
+    data: [{
+      type: "spline",
+      yValueFormatString: "#,###.## %",
+      xValueFormatString: "#",
+      dataPoints: datos3
+    },
+    {
+      type: "spline",
+      yValueFormatString: "#,###.## %",
+      xValueFormatString: "#",
+      dataPoints: datos4
+    },
+    {
+      type: "spline",
+      yValueFormatString: "#,###.## %",
+      xValueFormatString: "#",
+      dataPoints: datos5
+    
+    }]
+  });
+  $.getJSON("http://localhost:3000/default1", addData1);
+  function addData1(data) {
+    for (var i = 0; i < data.length; i++) {
+      datos3.push({
+        x: parseInt(data[i].Año),
+        y: parseFloat(data[i].total_muertes_accidente)
+        
+      });
+        datos4.push({
+        x: parseInt(data[i].Año),
+        y: parseFloat(data[i].total_hombres_accidente)
+        
+      });
+      datos5.push({
+        x: parseInt(data[i].Año),
+        y: parseFloat(data[i].total_mujeres_accidente)
+        
+      });
+    }
+
+    
+    chart1.render();
+
+  }
+
+  
+
+    $(document).ready(function () {
+        $.ajax('http://localhost:3000/default1',   // request url
+        {            
+          success: function (data, status, xhr) {    // success callback function
+
+            convertJsontoHtmlTable1(data);   //  llamada ala funcion que transforma el JSON a tabla
+          }
+        });
+          });
+
+  }
+  </script>
+
+
+
+
+
+
+
+    
+    <div class="container-scroller">
+      <!-- partial:partials/_sidebar.html -->
+      {{> navbar }}
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_navbar.html -->
+        {{> nav }}
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            {{> pageheader }}
+            <div class="row">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Años vs Tasa Natalidad Total</h4>
+                    
+                    <div class="row">
+                      <div class="card">
+                        <div class="card-body">
+                           <div id="Grafico" style="height: 370px; width: 100%;"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>              
+            <div class="row">
+              <div class="col-md-4 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Filtros</h4>
+                    <label class="form-label">Opción 1</label>
+                    <select class="form-control form-control" id="filtro">
+                      <option>Año-Genero-Masculino</option>  <!-- opciones de la cinta de filtros-->
+     
+                      <option>Año-Genero-Femenino</option>
+     
+                      <option>Año-Total</option>
+                    </select>
+                    
+                    <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
+                     
+                     
+                      
+                      <button class="btn btn-success" onclick="cargarnuevatabla()">Generar Tabla</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-success" onclick="generaractual()">Generar Tabla Inicial</button>
+                  
+                      
+                      
+                    
+                    </div>
+                  
+                  <div class="card-footer clearfix d-flex justify-content-center">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                      <button type="button" class="btn btn-danger" id="btnPDF" onclick="downloadDoc()">
+                        <i class="mdi mdi-file-pdf btn-icon-prepend"></i>PDF</button>
+                      <button type="button" class="btn btn-info" id="btnPNG" onclick="downloadtable()">
+                        <i class="mdi mdi-file-image btn-icon-prepend"></i>PNG</button>
+                      <button type="button" class="btn btn-success" id="btnExcel" onclick="exportData()">
+                        <i class="mdi mdi-file-excel btn-icon-prepend"></i>Excel</button>
+                    </div>
+                  </div> 
+
+                  </div>
+                   
+                </div>
+              </div>
+              <div class="col-md-8 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex flex-row justify-content-between">
+                      <h4 class="card-title mb-1">Tasa natalidad por años a nivel nacional</h4>
+                      <p class="text-muted mb-1">Contenido de tabla</p>
+                          
+                    </div>      
+                      <!-- TABLA DATOS -->                      
+                      <div id="tabledata"></div>     
+                       
+                   <!-- TABLA DATOS -->          
+                  </div>
+                </div>
+              </div>
+
+                          
+                
+
+            </div>
+            
+
+          
+                       
+          </div>
+
+
+           <div class="row">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Años vs Tasa Muertes Accidentales Total</h4>
+                    
+                    <div class="row">
+                      <div class="card">
+                        <div class="card-body">
+                           <div id="Grafico1" style="height: 370px; width: 100%;"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>              
+            <div class="row">
+              <div class="col-md-4 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Filtros</h4>
+                    <label class="form-label">Opción 1</label>
+                    <select class="form-control form-control" id="filtro1">
+                      <option>Año-Genero-Masculino</option>  <!-- opciones de la cinta de filtros-->
+     
+                      <option>Año-Genero-Femenino</option>
+     
+                      <option>Año-Total</option>
+                    </select>
+                    
+                    <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
+                     
+                     
+                      
+                      <button class="btn btn-success" onclick="cargarnuevatabla1()">Generar Tabla</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-success" onclick="generaractual1()">Generar Tabla Inicial</button>
+                  
+                      
+                      
+                    
+                    </div>
+                  
+                  <div class="card-footer clearfix d-flex justify-content-center">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                      <button type="button" class="btn btn-danger" id="btnPDF" onclick="downloadDoc1()">
+                        <i class="mdi mdi-file-pdf btn-icon-prepend"></i>PDF</button>
+                      <button type="button" class="btn btn-info" id="btnPNG" onclick="downloadtable1()">
+                        <i class="mdi mdi-file-image btn-icon-prepend"></i>PNG</button>
+                      <button type="button" class="btn btn-success" id="btnExcel" onclick="exportData1()">
+                        <i class="mdi mdi-file-excel btn-icon-prepend"></i>Excel</button>
+                    </div>
+                  </div> 
+
+                  </div>
+                   
+                </div>
+              </div>
+              <div class="col-md-8 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex flex-row justify-content-between">
+                      <h4 class="card-title mb-1">Tasa natalidad por años a nivel nacional</h4>
+                      <p class="text-muted mb-1">Contenido de tabla</p>
+                          
+                    </div>      
+                      <!-- TABLA DATOS -->                      
+                      <div id="tabledata1"></div>     
+                       
+                   <!-- TABLA DATOS -->          
+                  </div>
+                </div>
+              </div>
+
+                          
+                
+
+            </div>
+
+
+
+
+
+
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+          {{> footer }}
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+
+   
+   <script>      
+      function   cargarnuevatabla() {
+        const valor = document.getElementById('filtro');    /*SELECCIONAMOS LA CINTA DE OPCIONES POR SU ID FILTRO */
+        const opcion = valor.options[valor.selectedIndex].text;  /*OBTENENMOS EL TEXTO DEPENDIENDO LA OPCION QUE ELIGA LA CINTA*/
+        var url; 
+     
+        switch(opcion) {   /*SE COMPARA EL TEXTO  Y SE CARGA EL PHP CORRESPONDIENTE DEPENDIENDO EL TIPO DE ORDENAMIENTO */
+        
+        case "Año-Genero-Masculino":
+          url='http://localhost:3000/opcion1';
+        
+          $(document).ready(function () {
+            $.ajax(url,   // request url
+            {            
+              success: function (data, status, xhr) {    // success callback function
+
+                if(data=="error"){
+            alert("Error no se pudo concretar la conexion con la base de datos");
+          }
+          else{
+              convertJsontoHtmlTable(data);
+          }
+                var datos = [];
+                var chart = new CanvasJS.Chart("Grafico", {
+                  animationEnabled: true,
+                  theme: "dark2",
+                  title: {
+                    text: ""
+                  },
+                  axisY: {
+                    title: "Tasa",
+                    titleFontSize: 24,
+                    includeZero: true
+                  },
+                   axisX:{
+                  valueFormatString: "#"
+                  },
+                  data: [{
+                    type: "column",
+                    yValueFormatString: "#,###.## %",
+                    xValueFormatString: "#",
+                    dataPoints: datos 
+                  }]
+                });
+                $.getJSON(url, addData);
+                function addData(data) {
+                  for (var i = 0; i < data.length; i++) {
+                    datos.push({
+                      x: parseInt(data[i].Año),
+                      y: parseFloat(data[i].total_hombres_natalidad/100)
+                      
+                    });   
+                  }
+                  chart.render();
+                }  //  llamada ala funcion que transforma el JSON a tabla
+              }
+            });
+          });
+          break;
+        case "Año-Genero-Femenino":
+          url='http://localhost:3000/opcion2';
+          $(document).ready(function () {
+            $.ajax(url,   // request url
+            {            
+              success: function (data, status, xhr) {    // success callback function
+                if(data=="error"){
+            alert("Error no se pudo concretar la conexion con la base de datos");
+          }
+          else{
+              convertJsontoHtmlTable(data);
+          }
+                var datos = [];
+                var chart = new CanvasJS.Chart("Grafico", {
+                  animationEnabled: true,
+                  theme: "dark2",
+                  title: {
+                    text: ""
+                  },
+                  axisY: {
+                    title: "Tasa",
+                    titleFontSize: 24,
+                    includeZero: true
+                  },
+                   axisX:{
+                  valueFormatString: "#"
+                  },
+                  data: [{
+                    type: "column",
+                    yValueFormatString: "#,###.## %",
+                    xValueFormatString: "#",
+                    dataPoints: datos 
+                  }]
+                });
+                $.getJSON(url, addData);
+                function addData(data) {
+                  for (var i = 0; i < data.length; i++) {
+                    datos.push({
+                      x: parseInt(data[i].Año),
+                      y: parseFloat(data[i].total_mujeres_natalidad/100)
+                      
+                    });   
+                  }
+
+                  
+                  chart.render();
+
+                }   //  llamada ala funcion que transforma el JSON a tabla
+              }
+            });
+          });
+          break;
+        case "Año-Total":
+        url='http://localhost:3000/opcion3';
+        $(document).ready(function () {
+          $.ajax(url,   // request url
+          {            
+            success: function (data, status, xhr) {    // success callback function
+              
+              if(data=="error"){
+            alert("Error no se pudo concretar la conexion con la base de datos");
+          }
+          else{
+              convertJsontoHtmlTable(data);
+          }   //  llamada ala funcion que transforma el JSON a tabla //  llamada ala funcion que transforma el JSON a tabla
+              
+              var datos = [];
+    var chart = new CanvasJS.Chart("Grafico", {
+      animationEnabled: true,
+      theme: "dark2",
+      title: {
+        text: ""
+      },
+      axisY: {
+        title: "Tasa",
+        titleFontSize: 24,
+        includeZero: true
+      },
+      axisX:{
+                  valueFormatString: "#"
+                  },
+      data: [{
+        type: "column",
+        yValueFormatString: "#,###.## %",
+        xValueFormatString: "#",
+        dataPoints: datos 
+      }]
+    });
+    $.getJSON(url, addData);
+    function addData(data) {
+      for (var i = 0; i < data.length; i++) {
+        datos.push({
+          x: parseInt(data[i].Año),
+          y: parseFloat(data[i].total_natalidad/100)
+          
+        });   
+      }
+
+      
+      chart.render();
+
+    }
+
+
+            }
+          });
+            });
+            break;
+          }
+          
+          
+          }
+        </script>
+
+
+
+
+          <script>      
+      function   cargarnuevatabla1() {
+        const valor = document.getElementById('filtro1');    /*SELECCIONAMOS LA CINTA DE OPCIONES POR SU ID FILTRO */
+        const opcion = valor.options[valor.selectedIndex].text;  /*OBTENENMOS EL TEXTO DEPENDIENDO LA OPCION QUE ELIGA LA CINTA*/
+        var url; 
+     
+        switch(opcion) {   /*SE COMPARA EL TEXTO  Y SE CARGA EL PHP CORRESPONDIENTE DEPENDIENDO EL TIPO DE ORDENAMIENTO */
+        
+        case "Año-Genero-Masculino":
+          url='http://localhost:3000/opcion5';
+        
+          $(document).ready(function () {
+            $.ajax(url,   // request url
+            {            
+              success: function (data, status, xhr) {    // success callback function
+
+                if(data=="error"){
+            alert("Error no se pudo concretar la conexion con la base de datos");
+          }
+          else{
+              convertJsontoHtmlTable1(data);
+          }
+                var datos = [];
+                var chart = new CanvasJS.Chart("Grafico1", {
+                  animationEnabled: true,
+                  theme: "dark2",
+                  title: {
+                    text: ""
+                  },
+                  axisY: {
+                    title: "Tasa",
+                    titleFontSize: 24,
+                    includeZero: true
+                  },
+                   axisX:{
+                  valueFormatString: "#"
+                  },
+                  data: [{
+                    type: "spline",
+                    yValueFormatString: "#,###.## %",
+                    xValueFormatString: "#",
+                    dataPoints: datos 
+                  }]
+                });
+                $.getJSON(url, addData);
+                function addData(data) {
+                  for (var i = 0; i < data.length; i++) {
+                    datos.push({
+                      x: parseInt(data[i].Año),
+                      y: parseFloat(data[i].total_hombres_accidente)
+                      
+                    });   
+                  }
+                  chart.render();
+                }  //  llamada ala funcion que transforma el JSON a tabla
+              }
+            });
+          });
+          break;
+        case "Año-Genero-Femenino":
+          url='http://localhost:3000/opcion6';
+          $(document).ready(function () {
+            $.ajax(url,   // request url
+            {            
+              success: function (data, status, xhr) {    // success callback function
+                if(data=="error"){
+            alert("Error no se pudo concretar la conexion con la base de datos");
+          }
+          else{
+              convertJsontoHtmlTable1(data);
+          }
+                var datos = [];
+                var chart = new CanvasJS.Chart("Grafico1", {
+                  animationEnabled: true,
+                  theme: "dark2",
+                  title: {
+                    text: ""
+                  },
+                  axisY: {
+                    title: "Tasa",
+                    titleFontSize: 24,
+                    includeZero: true
+                  },
+                   axisX:{
+                  valueFormatString: "#"
+                  },
+                  data: [{
+                    type: "spline",
+                    yValueFormatString: "#,###.## %",
+                    xValueFormatString: "#",
+                    dataPoints: datos 
+                  }]
+                });
+                $.getJSON(url, addData);
+                function addData(data) {
+                  for (var i = 0; i < data.length; i++) {
+                    datos.push({
+                      x: parseInt(data[i].Año),
+                      y: parseFloat(data[i].total_mujeres_accidente)
+                      
+                    });   
+                  }
+
+                  
+                  chart.render();
+
+                }   //  llamada ala funcion que transforma el JSON a tabla
+              }
+            });
+          });
+          break;
+        case "Año-Total":
+        url='http://localhost:3000/opcion4';
+        $(document).ready(function () {
+          $.ajax(url,   // request url
+          {            
+            success: function (data, status, xhr) {    // success callback function
+              
+              if(data=="error"){
+            alert("Error no se pudo concretar la conexion con la base de datos");
+          }
+          else{
+              convertJsontoHtmlTable1(data);
+          }   //  llamada ala funcion que transforma el JSON a tabla //  llamada ala funcion que transforma el JSON a tabla
+              
+              var datos = [];
+    var chart = new CanvasJS.Chart("Grafico1", {
+      animationEnabled: true,
+      theme: "dark2",
+      title: {
+        text: ""
+      },
+      axisY: {
+        title: "Tasa",
+        titleFontSize: 24,
+        includeZero: true
+      },
+      axisX:{
+                  valueFormatString: "#"
+                  },
+      data: [{
+        type: "spline",
+        yValueFormatString: "#,###.## %",
+        xValueFormatString: "#",
+        dataPoints: datos 
+      }]
+    });
+    $.getJSON(url, addData);
+    function addData(data) {
+      for (var i = 0; i < data.length; i++) {
+        datos.push({
+          x: parseInt(data[i].Año),
+          y: parseFloat(data[i].total_muertes_accidente)
+          
+        });   
+      }
+
+      
+      chart.render();
+
+    }
+
+
+            }
+          });
+            });
+            break;
+          }
+          
+          
+          }
+        </script>
+
+
+
+  
+
+
+
+
+
+ <script>
+ /*SCRIPT PARA COONVERTIR TABLA A PNG*/
+  function downloadtable() {
+
+    var node = document.getElementById('tabledata');  /*LLAMADA ALA TABLA POR ID */
+
+    domtoimage.toPng(node)
+        .then(function (dataUrl) {
+            var img = new Image();
+            img.src = dataUrl;
+            downloadURI(dataUrl, "tabla.png")
+        })
+        .catch(function (error) {
+            console.error('Error', error);
+        });
+
+  }
+
+
+
+  function downloadURI(uri, name) {
+      var link = document.createElement("a");
+      link.download = name;
+      link.href = uri;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      delete link;
+  }
+
+
+ /*FIN SCRIPT PARA COONVERTIR TABLA A PNG*/
+</script>
+
+<script>
+  /*SCRIPT PARA COONVERTIR TABLA A PDF*/
+	
+function downloadDoc() {
+        var sTable = document.getElementById('tabledata').innerHTML;
+
+        var style = "<style>";
+        style = style + "table {width: 100%;font: 17px Calibri;}";
+        style = style + "table, th, td {border: solid 1px #DDD; border-collapse: collapse;";
+        style = style + "padding: 2px 3px;text-align: center;}";
+        style = style + "</style>";
+
+        // CREATE A WINDOW OBJECT.
+        var win = window.open('', '', 'height=700,width=700');
+
+        win.document.write('<html><head>');
+        win.document.write('<title>Profile</title>');   // <title> FOR PDF HEADER.
+        win.document.write(style);          // ADD STYLE INSIDE THE HEAD TAG.
+        win.document.write('</head>');
+        win.document.write('<body>');
+        win.document.write(sTable);         // THE TABLE CONTENTS INSIDE THE BODY TAG.
+        win.document.write('</body></html>');
+
+        win.document.close(); 	// CLOSE THE CURRENT WINDOW.
+
+        win.print();    // PRINT THE CONTENTS.
+    }
+
+
+/*FIN SCRIPT PARA COONVERTIR TABLA A PDF*/
+</script>
+
+
+<script>
+
+  /*SCRIPT PARA COONVERTIR TABLA A EXCEL*/
+
+  function exportData() {
+
+    // Variable to store the final csv data
+    var csv_data = [];
+
+    // Get each row data
+    var datos = document.getElementById('tabledata');
+    var rows = datos.getElementsByTagName('tr');
+    for (var i = 0; i < rows.length; i++) {
+
+      // Get each column data
+      var cols = rows[i].querySelectorAll('td,th');
+
+      // Stores each csv row data
+      var csvrow = [];
+      for (var j = 0; j < cols.length; j++) {
+
+          // Get the text data of each cell of
+          // a row and push it to csvrow
+          csvrow.push(cols[j].innerHTML);
+      }
+
+      // Combine each column value with comma
+      csv_data.push(csvrow.join(","));
+    }
+    // combine each row data with new line character
+    csv_data = csv_data.join('\n');
+
+    downloadCSVFile(csv_data);
+
+    /* We will use this function later to download
+    the data in a csv file downloadCSVFile(csv_data);
+    */
+  }
+
+  function downloadCSVFile(csv_data) {
+  
+    // Create CSV file object and feed
+    // our csv_data into it
+    CSVFile = new Blob([csv_data], {
+        type: "text/csv"
+    });
+
+    // Create to temporary link to initiate
+    // download process
+    var temp_link = document.createElement('a');
+
+    // Download csv file
+    temp_link.download = "Tabla.csv";
+    var url = window.URL.createObjectURL(CSVFile);
+    temp_link.href = url;
+
+    // This link should not be displayed
+    temp_link.style.display = "none";
+    document.body.appendChild(temp_link);
+
+    // Automatically click the link to
+    // trigger download
+    temp_link.click();
+    document.body.removeChild(temp_link);
+  }
+/*FIN SCRIPT PARA COONVERTIR TABLA A EXCEL*/
+</script>
+
+
+
+
+<script>
+ /*SCRIPT PARA COONVERTIR TABLA A PNG*/
+  function downloadtable1() {
+
+    var node = document.getElementById('tabledata1');  /*LLAMADA ALA TABLA POR ID */
+
+    domtoimage.toPng(node)
+        .then(function (dataUrl) {
+            var img = new Image();
+            img.src = dataUrl;
+            downloadURI(dataUrl, "tabla1.png")
+        })
+        .catch(function (error) {
+            console.error('Error', error);
+        });
+
+  }
+
+
+
+  function downloadURI(uri, name) {
+      var link = document.createElement("a");
+      link.download = name;
+      link.href = uri;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      delete link;
+  }
+
+
+ /*FIN SCRIPT PARA COONVERTIR TABLA A PNG*/
+</script>
+
+<script>
+  /*SCRIPT PARA COONVERTIR TABLA A PDF*/
+	
+function downloadDoc1() {
+        var sTable = document.getElementById('tabledata1').innerHTML;
+
+        var style = "<style>";
+        style = style + "table {width: 100%;font: 17px Calibri;}";
+        style = style + "table, th, td {border: solid 1px #DDD; border-collapse: collapse;";
+        style = style + "padding: 2px 3px;text-align: center;}";
+        style = style + "</style>";
+
+        // CREATE A WINDOW OBJECT.
+        var win = window.open('', '', 'height=700,width=700');
+
+        win.document.write('<html><head>');
+        win.document.write('<title>Profile</title>');   // <title> FOR PDF HEADER.
+        win.document.write(style);          // ADD STYLE INSIDE THE HEAD TAG.
+        win.document.write('</head>');
+        win.document.write('<body>');
+        win.document.write(sTable);         // THE TABLE CONTENTS INSIDE THE BODY TAG.
+        win.document.write('</body></html>');
+
+        win.document.close(); 	// CLOSE THE CURRENT WINDOW.
+
+        win.print();    // PRINT THE CONTENTS.
+    }
+
+
+/*FIN SCRIPT PARA COONVERTIR TABLA A PDF*/
+</script>
+
+
+<script>
+
+  /*SCRIPT PARA COONVERTIR TABLA A EXCEL*/
+
+  function exportData1() {
+
+    // Variable to store the final csv data
+    var csv_data = [];
+
+    // Get each row data
+    var datos = document.getElementById('tabledata1');
+    var rows = datos.getElementsByTagName('tr');
+    for (var i = 0; i < rows.length; i++) {
+
+      // Get each column data
+      var cols = rows[i].querySelectorAll('td,th');
+
+      // Stores each csv row data
+      var csvrow = [];
+      for (var j = 0; j < cols.length; j++) {
+
+          // Get the text data of each cell of
+          // a row and push it to csvrow
+          csvrow.push(cols[j].innerHTML);
+      }
+
+      // Combine each column value with comma
+      csv_data.push(csvrow.join(","));
+    }
+    // combine each row data with new line character
+    csv_data = csv_data.join('\n');
+
+    downloadCSVFile(csv_data);
+
+    /* We will use this function later to download
+    the data in a csv file downloadCSVFile(csv_data);
+    */
+  }
+
+  function downloadCSVFile(csv_data) {
+  
+    // Create CSV file object and feed
+    // our csv_data into it
+    CSVFile = new Blob([csv_data], {
+        type: "text/csv"
+    });
+
+    // Create to temporary link to initiate
+    // download process
+    var temp_link = document.createElement('a');
+
+    // Download csv file
+    temp_link.download = "Tabla.csv";
+    var url = window.URL.createObjectURL(CSVFile);
+    temp_link.href = url;
+
+    // This link should not be displayed
+    temp_link.style.display = "none";
+    document.body.appendChild(temp_link);
+
+    // Automatically click the link to
+    // trigger download
+    temp_link.click();
+    document.body.removeChild(temp_link);
+  }
+/*FIN SCRIPT PARA COONVERTIR TABLA A EXCEL*/
+</script>
+
+
+
+
+
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+ 
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
+    
+    <script src="assets/vendors/owl-carousel-2/owl.carousel.min.js"></script>
+  
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="assets/js/off-canvas.js"></script>
+    <script src="assets/js/hoverable-collapse.js"></script>
+    
+    <!-- End custom js for this page -->
+
+    
+
+
+  </body>
+</html>

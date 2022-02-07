@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="es">
+  {{> header }}
+  <body>
+
+    <script type="text/javascript" src="assets/js/jquery-3.6.0.js">/*Jquery script */</script>  
+
+  
+
+    
+
+    <script type="text/javascript" src="assets/js/dom-to-image.js"> /*dom to image script */</script>
+
+    
+    <script type="text/javascript" src="assets/js/popper.min.js">/*POPPER LIBRERIA */</script>
+
+    
+    
+<script src="assets/js/canvasjs.min.js"></script>
+
+ 
+
+
+   
+
+    
+    <div class="container-scroller">
+      <!-- partial:partials/_sidebar.html -->
+      {{> navbar }}
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_navbar.html -->
+        {{> nav }}
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            {{> pageheader }}
+                      
+             <div class="col-md-8 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    
+                      <h4 class="card-title mb-1">MATENIMEINTO DE DATOS</h4>
+                
+                        
+                      <div>
+                       
+                    <label class="form-label">DIMENCION</label>
+                    <select class="form-control form-control" id="filtro">
+                     <!-- opciones de la cinta de filtros-->
+                      <option>DIM_MUERTES_NO_VIOLENTAS</option>
+                      <option>DIM_NATALIDAD</option>
+                
+                    </select>
+                      <div style="padding-top:40px"> 
+                    
+                    <button class="btn btn-dark" onclick="insertar()">Insertar</button>&nbsp;<button class="btn btn-dark" onclick="actualizar()">Actualizar</button>&nbsp;<button class="btn btn-dark" onclick="borrar()">Borrar</button> 
+                     
+                      
+                      <br>
+                      <br>
+                      <div id="form1" class="form-group">
+
+                      </div>
+                                
+                                  
+                        
+                  </div>
+                </div>
+              </div>
+            <!-- Figura 2-->
+            
+
+            
+             
+              
+            
+                       
+          </div>
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+          
+          <!-- partial -->
+        </div>
+        {{> footer }}
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+
+   
+<script>
+  var veces=1;
+  var ultimo;       
+
+  $.get("http://localhost:3000/default",
+   
+    function(data){
+      ultimo=data[data.length-1].Numero_de_Dato;
+    });
+
+         
+function insertar(){
+ const valor = document.getElementById('filtro');    /*SELECCIONAMOS LA CINTA DE OPCIONES POR SU ID FILTRO */
+const opcion = valor.options[valor.selectedIndex].text;  /*OBTENENMOS EL TEXTO DEPENDIENDO LA OPCION QUE ELIGA LA CINTA*/
+  
+  switch(opcion) { 
+  case "DIM_NATALIDAD":
+  if(veces==1){
+veces=veces-1;
+  
+  $(document).ready(function() {
+    
+$("div#form1").append(
+// Creating Form Div and Adding <h2> and <p> Paragraph Tag in it.
+$("<p/>").text("Inserte los datos para la dimension selccionada"), $("<form/>", {
+action: '#',
+method: '#'
+}).append(
+$("<input type='text' id='vndato' placeholder='Numero de dato'><br>", {
+
+}),
+$("<input type='text' id='vaño' placeholder='Año'><br>", {
+
+}), // Creating Input Element With Attribute.
+$("<input type='text' id='vtotal' placeholder='Total'><br>", {
+
+}), $("<input type='text' id='vMasculinidad' placeholder='Masculinidad'><br>", {
+
+}),$("<input type='text' id='vmFemenina' placeholder='Femenina'>", {
+
+}),$("<br><br><button class='btn btn-info' id='enviar'>Enviar</button>", {
+})))
+});
+}
+else{
+  alert("Por Favor Ingrese los datos en la forma actual , si desea cambiar de Metodo o Dimension Recargue la pagina");
+}
+
+  
+
+    $(document).ready(function(){
+       
+    
+
+
+  $("#enviar").click(function(){
+    let anios = document.getElementById("vaño").value;
+  let total = document.getElementById("vtotal").value;
+  let masculina = document.getElementById("vMasculinidad").value;
+  let femenina = document.getElementById("vmFemenina").value;
+  let ndato = document.getElementById("vndato").value;
+  var alerted = false;
+  var ExpRegSoloNumeros="^[0-9]+$";
+  var ExpRegNumDec=/^\d*\.\d+$/;
+ 
+    if(ndato.match(ExpRegSoloNumeros)==null){
+         if (alerted === false){
+          alert("Ingrese el numero de dato en formato entero , Ejemplo : 10");
+          alerted = true;
+       }
+    }
+    else{
+        if(ndato<=ultimo){
+         if (alerted === false){
+          alert("Dato ya existente");
+          alerted = true;
+       }
+    }
+
+    }
+    
+    if(anios.match(ExpRegSoloNumeros)==null){
+       if (alerted === false){
+          alert("Ingrese Año en el formato , Ejemplo : 2020");
+          alerted = true;
+       }
+    }
+
+    if(total.match(ExpRegNumDec)==null || masculina.match(ExpRegNumDec)==null || femenina.match(ExpRegNumDec)==null){
+       if (alerted === false){
+          alert("Ingrese Numeros en el formato entero o decimal , Ejemplo : Decimal : 10.5 , 10.0");
+          alerted = true;
+       }
+    }
+
+     if(total.match(ExpRegNumDec)!=null && masculina.match(ExpRegNumDec)!=null && femenina.match(ExpRegNumDec)!=null && anios.match(ExpRegSoloNumeros)!=null && (ndato>ultimo)){
+        $.post("http://localhost:3000/insertar",
+    {
+      ndato: ndato,
+      anios: anios,
+      total: total,
+      masculina: masculina,
+      femenina: femenina
+    },
+    
+    function(data){
+  if (alerted === false){
+    alert(data);
+      window.location.reload();
+      alerted = true;
+  }
+      
+    });
+    }
+    
+    
+
+    
+       
+  });
+ 
+
+});
+
+break;
+
+case "DIM_MUERTES_NO_VIOLENTAS":
+  if(veces==1){
+veces=veces-1;
+  
+  $(document).ready(function() {
+    
+$("div#form1").append(
+// Creating Form Div and Adding <h2> and <p> Paragraph Tag in it.
+$("<p/>").text("Inserte los datos para la dimension selccionada"), $("<form/>", {
+action: '#',
+method: '#'
+}).append(
+$("<input type='text' id='vndato' placeholder='Numero de dato'><br>", {
+
+}),
+$("<input type='text' id='vaño' placeholder='Año'><br>", {
+
+}), // Creating Input Element With Attribute.
+$("<input type='text' id='vtotal' placeholder='Total'><br>", {
+
+}), $("<input type='text' id='vMasculinidad' placeholder='Masculinidad'><br>", {
+
+}),$("<input type='text' id='vmFemenina' placeholder='Femenina'>", {
+
+}),$("<br><br><button class='btn btn-info' id='enviar'>Enviar</button>", {
+})))
+});
+}
+else{
+  alert("Por Favor Ingrese los datos en la forma actual , si desea cambiar de Metodo o Dimension Recargue la pagina");
+}
+
+
+  $(document).ready(function(){
+       
+    
+
+
+  $("#enviar").click(function(){
+    let anios = document.getElementById("vaño").value;
+  let total = document.getElementById("vtotal").value;
+  let masculina = document.getElementById("vMasculinidad").value;
+  let femenina = document.getElementById("vmFemenina").value;
+  let ndato = document.getElementById("vndato").value;
+  var alerted = false;
+  var ExpRegSoloNumeros="^[0-9]+$";
+  var ExpRegNumDec=/^\d*\.\d+$/;
+ 
+    if(ndato.match(ExpRegSoloNumeros)==null){
+         if (alerted === false){
+          alert("Ingrese el numero de dato en formato entero , Ejemplo : 10");
+          alerted = true;
+       }
+    }
+    else{
+        if(ndato<=ultimo){
+         if (alerted === false){
+          alert("Dato ya existente");
+          alerted = true;
+       }
+    }
+
+    }
+    
+    if(anios.match(ExpRegSoloNumeros)==null){
+       if (alerted === false){
+          alert("Ingrese Año en el formato , Ejemplo : 2020");
+          alerted = true;
+       }
+    }
+
+    if(total.match(ExpRegNumDec)==null || masculina.match(ExpRegNumDec)==null || femenina.match(ExpRegNumDec)==null){
+       if (alerted === false){
+          alert("Ingrese Numeros en el formato entero o decimal , Ejemplo : Decimal : 10.5 , 10.0");
+          alerted = true;
+       }
+    }
+
+     if(total.match(ExpRegNumDec)!=null && masculina.match(ExpRegNumDec)!=null && femenina.match(ExpRegNumDec)!=null && anios.match(ExpRegSoloNumeros)!=null && (ndato>ultimo)){
+        $.post("http://localhost:3000/insertar1",
+    {
+      ndato: ndato,
+      anios: anios,
+      total: total,
+      masculina: masculina,
+      femenina: femenina
+    },
+    
+    function(data){
+  if (alerted === false){
+    alert(data);
+      window.location.reload();
+      alerted = true;
+  }
+      
+    });
+    }
+    
+    
+
+    
+       
+  });
+ 
+
+});
+
+
+
+
+
+
+break;
+
+}
+
+ 
+
+} /// fin funcion insertar
+
+</script>
+
+<script>
+function actualizar(){
+  const valor = document.getElementById('filtro');    /*SELECCIONAMOS LA CINTA DE OPCIONES POR SU ID FILTRO */
+  const opcion = valor.options[valor.selectedIndex].text;  /*OBTENENMOS EL TEXTO DEPENDIENDO LA OPCION QUE ELIGA LA CINTA*/
+  var valor1 ;    /*SELECCIONAMOS LA CINTA DE OPCIONES POR SU ID FILTRO */
+  var opcion1;
+  switch(opcion) { 
+  case "DIM_NATALIDAD":
+  if(veces==1){
+veces=veces-1;
+  
+  $(document).ready(function() {
+    
+$("div#form1").append(
+// Creating Form Div and Adding <h2> and <p> Paragraph Tag in it.
+$("<p/>").text("Inserte los datos para actualizar la dimensicion seleccionada"), $("<form/>", {
+action: '#',
+method: '#'
+}).append(
+// Create <form> Tag and Appending in HTML Div form1.
+$("<select class='form-control form-control' id='act'><option>Totales</option><option>Tasa-Hombres</option><option>Tasa-Mujeres</option></select>", {
+
+}),$("<br><br><button class='btn btn-info' id='seleccion'>Enviar</button>", {
+}),$("<br><br><input type='text' id='ndato' placeholder='Numero de dato'><br>", {
+}),$("<br><br><input type='text' id='vtotal' placeholder='Valor'><br>", {
+})
+
+))
+});
+
+}
+else{
+  alert("Por Favor Ingrese los datos en la forma actual , si desea cambiar de Metodo o Dimension Recargue la pagina");
+}
+
+
+$(document).ready(function(){
+  $("#seleccion").click(function(){
+    valor1 = document.getElementById('act');    /*SELECCIONAMOS LA CINTA DE OPCIONES POR SU ID FILTRO */
+    opcion1 = valor1.options[valor1.selectedIndex].text;
+    let ndato = document.getElementById("ndato").value;
+    let total = document.getElementById("vtotal").value;
+    var variable;
+    var ExpRegSoloNumeros="^[0-9]+$";
+    var ExpRegNumDec=/^\d*\.\d+$/;
+  if(ndato.match(ExpRegSoloNumeros)==null){
+     
+          alert("Ingrese el numero de dato en formato entero , Ejemplo : 20");
+          
+       
+    }
+    else{
+        if(ndato>ultimo){
+          alert("Dato no existente");
+        }
+
+    }
+
+    if(total.match(ExpRegNumDec)==null){
+     
+         alert("Ingrese Numeros en el formato entero o decimal , Ejemplo : Decimal : 10.5 , 10.0");
+        
+       
+    }
+
+  if(total.match(ExpRegNumDec)!=null && ndato.match(ExpRegSoloNumeros)!=null && (ndato<=ultimo)){
+
+ 
+      switch(opcion1){
+  case "Totales":
+    variable="total_natalidad";
+    $.post("http://localhost:3000/actualizar",
+    {
+      ndato: ndato,
+      total: total,
+      variable: variable 
+    },
+    
+    function(data){
+     alert(data);
+      window.location.reload();
+    });
+
+  break;
+  case "Tasa-Hombres":
+
+    variable="total_hombres_natalidad";
+    $.post("http://localhost:3000/actualizar",
+    {
+      ndato: ndato,
+      total: total,
+      variable: variable 
+    },
+    
+    function(data){
+      alert(data);
+      window.location.reload();
+    });
+
+  break;
+  case "Tasa-Mujeres":
+
+      variable="total_mujeres_natalidad";
+    $.post("http://localhost:3000/actualizar",
+    {
+      ndato: ndato,
+      total: total,
+      variable: variable 
+    },
+    
+    function(data){
+      alert(data);
+      window.location.reload();
+    });
+
+  break;
+  }
+ 
+
+  }
+
+  });
+  
+});
+
+
+break;
+
+case "DIM_MUERTES_NO_VIOLENTAS":
+
+ if(veces==1){
+veces=veces-1;
+  
+  $(document).ready(function() {
+    
+$("div#form1").append(
+// Creating Form Div and Adding <h2> and <p> Paragraph Tag in it.
+$("<p/>").text("Inserte los datos para actualizar la dimensicion seleccionada"), $("<form/>", {
+action: '#',
+method: '#'
+}).append(
+// Create <form> Tag and Appending in HTML Div form1.
+$("<select class='form-control form-control' id='act'><option>Totales</option><option>Tasa-Hombres</option><option>Tasa-Mujeres</option></select>", {
+
+}),$("<br><br><button class='btn btn-info' id='seleccion'>Enviar</button>", {
+}),$("<br><br><input type='text' id='ndato' placeholder='Numero de dato'><br>", {
+}),$("<br><br><input type='text' id='vtotal' placeholder='Valor'><br>", {
+})
+
+))
+});
+
+}
+else{
+  alert("Por Favor Ingrese los datos en la forma actual , si desea cambiar de Metodo o Dimension Recargue la pagina");
+}
+
+
+$(document).ready(function(){
+  $("#seleccion").click(function(){
+    valor1 = document.getElementById('act');    /*SELECCIONAMOS LA CINTA DE OPCIONES POR SU ID FILTRO */
+    opcion1 = valor1.options[valor1.selectedIndex].text;
+    let ndato = document.getElementById("ndato").value;
+    let total = document.getElementById("vtotal").value;
+    var variable;
+    var ExpRegSoloNumeros="^[0-9]+$";
+    var ExpRegNumDec=/^\d*\.\d+$/;
+  if(ndato.match(ExpRegSoloNumeros)==null){
+     
+          alert("Ingrese el numero de dato en formato entero , Ejemplo : 20");
+          
+       
+    }
+    else{
+        if(ndato>ultimo){
+          alert("Dato no existente");
+        }
+
+    }
+
+    if(total.match(ExpRegNumDec)==null){
+     
+         alert("Ingrese Numeros en el formato entero o decimal , Ejemplo : Decimal : 10.5 , 10.0");
+        
+       
+    }
+
+  if(total.match(ExpRegNumDec)!=null && ndato.match(ExpRegSoloNumeros)!=null && (ndato<=ultimo)){
+
+ 
+      switch(opcion1){
+  case "Totales":
+    variable="total_muertes_accidente";
+    $.post("http://localhost:3000/actualizar1",
+    {
+      ndato: ndato,
+      total: total,
+      variable: variable 
+    },
+    
+    function(data){
+     alert(data);
+      window.location.reload();
+    });
+
+  break;
+  case "Tasa-Hombres":
+
+    variable="total_hombres_accidente";
+    $.post("http://localhost:3000/actualizar1",
+    {
+      ndato: ndato,
+      total: total,
+      variable: variable 
+    },
+    
+    function(data){
+      alert(data);
+      window.location.reload();
+    });
+
+  break;
+  case "Tasa-Mujeres":
+
+      variable="total_mujeres_accidente";
+    $.post("http://localhost:3000/actualizar1",
+    {
+      ndato: ndato,
+      total: total,
+      variable: variable 
+    },
+    
+    function(data){
+      alert(data);
+      window.location.reload();
+    });
+
+  break;
+  }
+ 
+
+  }
+
+  });
+  
+});
+
+
+
+break;
+}
+   
+
+
+}
+
+</script>
+
+<script>
+function borrar(){
+const valor = document.getElementById('filtro');    /*SELECCIONAMOS LA CINTA DE OPCIONES POR SU ID FILTRO */
+const opcion = valor.options[valor.selectedIndex].text;  /*OBTENENMOS EL TEXTO DEPENDIENDO LA OPCION QUE ELIGA LA CINTA*/
+  switch(opcion) { 
+  case "DIM_NATALIDAD":
+  if(veces==1){
+veces=veces-1;
+  
+  $(document).ready(function() {
+    
+$("div#form1").append(
+// Creating Form Div and Adding <h2> and <p> Paragraph Tag in it.
+$("<p/>").text("Inserte el dato comun para borrar la fila de la dimension selccionada"), $("<form/>", {
+action: '#',
+method: '#'
+}).append(
+// Create <form> Tag and Appending in HTML Div form1.
+$("<input/>", {
+type: 'text',
+id: 'vaño',
+name: 'año',
+placeholder: 'Año'
+}), $("<br/>"), $("<br><button class='btn btn-info' id='borrar'>Enviar</button>", {
+
+})
+))
+});
+
+}
+else{
+  alert("Por Favor Ingrese los datos en la forma actual , si desea cambiar de Metodo o Dimension Recargue la pagina");
+}
+
+$(document).ready(function(){
+  $("#borrar").click(function(){
+    var ExpRegSoloNumeros="^[0-9]+$";
+    var ExpRegNumDec=/^\d*\.\d+$/;
+    let anios = document.getElementById("vaño").value;
+     alerted=false;
+    if(anios.match(ExpRegSoloNumeros)==null){
+     
+          alert("Ingrese Año en el formato , Ejemplo : 2020");
+        
+       
+    }
+    else{
+
+      $.post("http://localhost:3000/borrar",
+    {
+      anios: anios
+    },
+    
+    function(data){
+      if (alerted == false){
+           alert(data);
+        window.location.reload();
+        alerted=true;
+      }
+     
+    });
+
+    }
+    
+  
+  });
+});
+break;
+case "DIM_MUERTES_NO_VIOLENTAS":
+ if(veces==1){
+veces=veces-1;
+  
+  $(document).ready(function() {
+    
+$("div#form1").append(
+// Creating Form Div and Adding <h2> and <p> Paragraph Tag in it.
+$("<p/>").text("Inserte el dato comun para borrar la fila de la dimension selccionada"), $("<form/>", {
+action: '#',
+method: '#'
+}).append(
+// Create <form> Tag and Appending in HTML Div form1.
+$("<input/>", {
+type: 'text',
+id: 'vaño',
+name: 'año',
+placeholder: 'Año'
+}), $("<br/>"), $("<br><button class='btn btn-info' id='borrar'>Enviar</button>", {
+
+})
+))
+});
+
+}
+else{
+  alert("Por Favor Ingrese los datos en la forma actual , si desea cambiar de Metodo o Dimension Recargue la pagina");
+}
+
+$(document).ready(function(){
+  $("#borrar").click(function(){
+    var ExpRegSoloNumeros="^[0-9]+$";
+    var ExpRegNumDec=/^\d*\.\d+$/;
+    let anios = document.getElementById("vaño").value;
+     alerted=false;
+    if(anios.match(ExpRegSoloNumeros)==null){
+     
+          alert("Ingrese Año en el formato , Ejemplo : 2020");
+        
+       
+    }
+    else{
+
+      $.post("http://localhost:3000/borrar",
+    {
+      anios: anios
+    },
+    
+    function(data){
+      if (alerted == false){
+           alert(data);
+        window.location.reload();
+        alerted=true;
+      }
+     
+    });
+
+    }
+    
+  
+  });
+});
+break;
+}
+
+  
+
+} 
+</script>
+
+
+ 
+
+
+
+
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+   
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    
+    <script src="assets/vendors/owl-carousel-2/owl.carousel.min.js"></script>
+   
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="assets/js/off-canvas.js"></script>
+    <script src="assets/js/hoverable-collapse.js"></script>
+    
+    <!-- End custom js for this page -->
+
+    
+
+
+  </body>
+</html>
